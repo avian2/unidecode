@@ -28,16 +28,13 @@ for($n = 0; $n < 256; $n++) {
 	next unless( $#{$Text::Unidecode::Char[$n]} >= 0 );
 
 	open(PYTHON, sprintf(">%s/x%02x.py", $output, $n));
-	print PYTHON "data = (";
+	print PYTHON "data = (\n";
 
-	my $first = 1;
+	my $m = 0;
 	for my $t (@{$Text::Unidecode::Char[$n]}) {
-		if( $first ) {
-			$first = 0;
-		} else {
-			print PYTHON ", ";
-		}
-		print PYTHON "'", &python_escape($t), "'";
+		print PYTHON "'", &python_escape($t), "'    # ";
+		printf PYTHON "0x%02x\n", $m;
+		$m++;
 	}
 
 	print PYTHON ")\n";
