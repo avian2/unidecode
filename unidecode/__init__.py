@@ -1,8 +1,16 @@
+"""ASCII transliterations of Unicode text
+"""
 Char = {}
 
 NULLMAP = [ '' * 0x100 ]
 
 def unidecode(string):
+	"""Transliterate an Unicode object into an ASCII string
+
+	>>> unidecode(u"\u5317\u4EB0")
+	"Bei Jing "
+	"""
+
 	retval = []
 
 	for char in string:
