@@ -35,6 +35,9 @@ class TestUnidecode(unittest.TestCase):
 
 				(u'vi\xf1edos',
 				"vinedos"),
+				
+				(u"\u5317\u4EB0",
+				"Bei Jing "),
 			]
 
 		for input, output in TESTS:
