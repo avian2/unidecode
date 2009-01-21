@@ -29,6 +29,12 @@ class TestUnidecode(unittest.TestCase):
 
 				(u"а",
 				"a"),
+
+				(u'ch\xe2teau',
+				"chateau"),
+
+				(u'vi\xf1edos',
+				"vinedos"),
 			]
 
 		for input, output in TESTS:
