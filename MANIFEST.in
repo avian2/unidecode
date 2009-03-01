@@ -1,0 +1,2 @@
+include perl2python.pl
+recursive-include tests *.py
