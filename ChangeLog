@@ -1,0 +1,8 @@
+2009-08-27	unidecode 0.04.2
+
+	* Corrected replacements for Japanese Kana characters 
+	  (thanks to Michel Albert)
+
+2009-01-25	unidecode 0.04.1
+
+	* First public release
