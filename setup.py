@@ -26,7 +26,7 @@ class TestCommand(Command):
 		result = unittest.TextTestRunner(verbosity=2).run(suite)
 
 setup(name='Unidecode',
-      version='0.04.1',
+      version='0.04.2',
       description='US-ASCII transliterations of Unicode text',
       author='Tomaz Solc',
       author_email='tomaz.solc@tablix.org',
