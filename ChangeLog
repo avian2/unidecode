@@ -1,3 +1,8 @@
+2010-01-12	unidecode 0.04.3
+
+	* Corrected transliteration for Cyrillic alphabet
+	  (thanks to Ruslan Grokhovetskiy)
+
 2009-08-27	unidecode 0.04.2
 
 	* Corrected replacements for Japanese Kana characters 
