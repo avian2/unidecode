@@ -38,6 +38,9 @@ class TestUnidecode(unittest.TestCase):
 				
 				(u"\u5317\u4EB0",
 				"Bei Jing "),
+
+				(u"Efﬁcient",
+				"Efficient"),
 			]
 
 		for input, output in TESTS:
