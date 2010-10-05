@@ -4,7 +4,7 @@ from distutils.core import Command, setup
 import unittest
 
 UNITTESTS = [
-		"tests.basic", 
+		"tests", 
 	]
 
 class TestCommand(Command):

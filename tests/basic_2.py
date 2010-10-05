@@ -45,3 +45,6 @@ class TestUnidecode(unittest.TestCase):
 
 		for input, output in TESTS:
 			self.failUnlessEqual(unidecode(input), output)
+
+if __name__ == "__main__":
+    unittest.main()

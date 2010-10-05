@@ -2,3 +2,6 @@ build
 dist
 MANIFEST
 *.pyc
+*~
+*.bak
+.*

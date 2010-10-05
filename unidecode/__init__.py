@@ -1,48 +1,54 @@
-"""ASCII transliterations of Unicode text
-"""
-Char = {}
+# -*- coding: utf-8 -*-
+"""Transliterate Unicode text into plain 7-bit ASCII.
 
-NULLMAP = [ '' * 0x100 ]
+Example usage:
+>>> from unidecode import unidecode:
+>>> unidecode(u"\u5317\u4EB0")
+"Bei Jing "
+
+The transliteration uses a straightforward map, and doesn't have alternatives
+for the same character based on language, position, or anything else.
+
+In Python 3, a standard string object will be returned. If you need bytes, use:
+>>> unidecode("Κνωσός").encode("ascii")
+b'Knosos'
+"""
+Cache = {}
 
 def unidecode(string):
-	"""Transliterate an Unicode object into an ASCII string
+    """Transliterate an Unicode object into an ASCII string
 
-	>>> unidecode(u"\u5317\u4EB0")
-	"Bei Jing "
-	"""
+    >>> unidecode(u"\u5317\u4EB0")
+    "Bei Jing "
+    """
 
-	retval = []
+    retval = []
 
-	for char in string:
-		o = ord(char)
+    for char in string:
+        codepoint = ord(char)
 
-		if o < 0x80:
-			retval.append(char)
-			continue
+        if codepoint < 0x80: # Basic ASCII
+            retval.append(char)
+            continue
+        
+        if codepoint > 0xffff:
+            continue # We don't support characters beyond the BMP.
 
-		h = o >> 8
-		l = o & 0xff
+        section = codepoint >> 8   # Chop off the last two hex digits
+        position = codepoint % 256 # Last two hex digits
 
-		c = Char.get(h, None)
-		
-		if c == None:
-			try:
-				mod = __import__('unidecode.x%02x'%(h), [], [], ['data'])
-			except ImportError:
-				Char[h] = NULLMAP
-				retval.append('')
-				continue
+        try:
+            table = Cache[section]
+        except KeyError:
+            try:
+                mod = __import__('unidecode.x%02x'%(section), [], [], ['data'])
+            except ImportError:
+                Cache[section] = None
+                continue   # No match: ignore this character and carry on.
 
-			Char[h] = mod.data
+            Cache[section] = table = mod.data
 
-			try:
-				retval.append( mod.data[l] )
-			except IndexError:
-				retval.append( '' )
-		else:
-			try:
-				retval.append( c[l] )
-			except IndexError:
-				retval.append( '' )
+        if table:
+            retval.append( table[position] )
 
-	return ''.join(retval)
+    return ''.join(retval)
