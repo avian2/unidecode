@@ -48,7 +48,7 @@ def unidecode(string):
 
             Cache[section] = table = mod.data
 
-        if table:
+        if table and len(table) > position:
             retval.append( table[position] )
 
     return ''.join(retval)
