@@ -31,8 +31,8 @@ def unidecode(string):
             retval.append(char)
             continue
         
-        if codepoint > 0xffff:
-            continue # We don't support characters beyond the BMP.
+        if codepoint > 0xeffff:
+            continue # Characters in Private Use Area and above are ignored
 
         section = codepoint >> 8   # Chop off the last two hex digits
         position = codepoint % 256 # Last two hex digits
@@ -41,7 +41,7 @@ def unidecode(string):
             table = Cache[section]
         except KeyError:
             try:
-                mod = __import__('unidecode.x%02x'%(section), [], [], ['data'])
+                mod = __import__('unidecode.x%03x'%(section), [], [], ['data'])
             except ImportError:
                 Cache[section] = None
                 continue   # No match: ignore this character and carry on.
