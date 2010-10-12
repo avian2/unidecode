@@ -15,6 +15,33 @@ class TestUnidecode(unittest.TestCase):
 			t = unichr(n)
 			unidecode(t)
 
+	def test_mathematical_latin(self):
+		# 13 consecutive sequences of A-Z, a-z with some codepoints
+		# undefined. We just count the undefined ones and don't check
+		# positions.
+		empty = 0
+		for n in xrange(0x1d400, 0x1d6a4):
+			if n % 52 < 26:
+				a = chr(ord('A') + n % 26)
+			else:
+				a = chr(ord('a') + n % 26)
+			b = unidecode(unichr(n))
+
+			if not b:
+				empty += 1
+			else:
+				self.failUnlessEqual(unidecode(b), a)
+
+		self.failUnlessEqual(empty, 24)
+
+	def test_mathematical_digits(self):
+		# 5 consecutive sequences of 0-9
+		for n in xrange(0x1d7ce, 0x1d800):
+			a = chr(ord('0') + (n-0x1d7ce) % 10)
+			b = unidecode(unichr(n))
+
+			self.failUnlessEqual(unidecode(b), a)
+
 	def test_specific(self):
 
 		TESTS = [
@@ -58,7 +85,11 @@ class TestUnidecode(unittest.TestCase):
 
 				# Non-BMP character
 				(u'\U0001d5a0',
-				''),
+				'A'),
+
+				# Mathematical
+				(u'\U0001d5c4\U0001d5c6/\U0001d5c1',
+				'km/h'),
 			]
 
 		for input, output in TESTS:
