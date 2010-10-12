@@ -41,6 +41,18 @@ class TestUnidecode(unittest.TestCase):
 
 				("Efﬁcient",
 				"Efficient"),
+
+				# Table that doesn't exist
+				('\ua500',
+				''),
+				
+				# Table that has less than 256 entriees
+				('\u1eff',
+				''),
+
+				# Non-BMP character
+				('\U0001d5a0',
+				''),
 			]
 
 		for input, output in TESTS:
