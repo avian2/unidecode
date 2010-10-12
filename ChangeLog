@@ -1,3 +1,10 @@
+2010-10-12	unidecode 0.04.4
+
+	* Unit tests for Python 3 and simplified transliteration
+	  code (thanks to Thomas Kluyver)
+	* Support for mathematical versions of latin and greek alphabets 
+	  and digits.
+
 2010-01-12	unidecode 0.04.3
 
 	* Corrected transliteration for Cyrillic alphabet
