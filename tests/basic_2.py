@@ -30,7 +30,7 @@ class TestUnidecode(unittest.TestCase):
 			if not b:
 				empty += 1
 			else:
-				self.failUnlessEqual(unidecode(b), a)
+				self.failUnlessEqual(b, a)
 
 		self.failUnlessEqual(empty, 24)
 
@@ -40,7 +40,7 @@ class TestUnidecode(unittest.TestCase):
 			a = chr(ord('0') + (n-0x1d7ce) % 10)
 			b = unidecode(unichr(n))
 
-			self.failUnlessEqual(unidecode(b), a)
+			self.failUnlessEqual(b, a)
 
 	def test_specific(self):
 
