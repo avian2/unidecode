@@ -9,6 +9,12 @@ class TestUnidecode(unittest.TestCase):
 
 			self.failUnlessEqual(unidecode(t), t)
 
+	def test_bmp(self):
+		for n in range(0,0x10000):
+			# Just check that it doesn't throw an exception
+			t = unichr(n)
+			unidecode(t)
+
 	def test_specific(self):
 
 		TESTS = [
