@@ -1,3 +1,7 @@
+2010-10-15	unidecode 0.04.5
+
+	* Unit test fixes.
+
 2010-10-12	unidecode 0.04.4
 
 	* Unit tests for Python 3 and simplified transliteration
