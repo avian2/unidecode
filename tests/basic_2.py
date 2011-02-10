@@ -75,6 +75,13 @@ class TestUnidecode(unittest.TestCase):
 				(u"Efﬁcient",
 				"Efficient"),
 
+				# https://github.com/iki/unidecode/commit/4a1d4e0a7b5a11796dc701099556876e7a520065
+				(u'příliš žluťoučký kůň pěl ďábelské ódy',
+				'prilis zlutoucky kun pel dabelske ody'),
+
+				(u'PŘÍLIŠ ŽLUŤOUČKÝ KŮŇ PĚL ĎÁBELSKÉ ÓDY',
+				'PRILIS ZLUTOUCKY KUN PEL DABELSKE ODY'),
+
 				# Table that doesn't exist
 				(u'\ua500',
 				''),
