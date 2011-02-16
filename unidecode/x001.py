@@ -241,7 +241,7 @@ data = (
 'zh',    # 0xef
 'j',    # 0xf0
 'DZ',    # 0xf1
-'D',    # 0xf2
+'Dz',    # 0xf2
 'dz',    # 0xf3
 'G',    # 0xf4
 'g',    # 0xf5
