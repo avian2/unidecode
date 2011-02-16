@@ -1,0 +1,12 @@
+This directory contains some tools that help find problems in the
+transliteration mappings.
+
+check_character_names.py
+========================
+
+Compares the names of Unicode characters with the output of unidecode using
+simple heuristics.
+
+Download the list of character names here:
+
+http://www.unicode.org/Public/UNIDATA/NamesList.txt
