@@ -14,6 +14,14 @@ class TestUnidecode(unittest.TestCase):
 			t = chr(n)
 			unidecode(t)
 			
+	def test_circled_latin(self):
+		# 1 sequence of a-z
+		for n in xrange(0, 26):
+			a = chr(ord('a') + n)
+			b = unidecode(chr(0x24d0 + n))
+
+			self.failUnlessEqual(b, a)
+
 	def test_mathematical_latin(self):
 		# 13 consecutive sequences of A-Z, a-z with some codepoints
 		# undefined. We just count the undefined ones and don't check
