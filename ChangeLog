@@ -1,3 +1,9 @@
+2011-02-16	unidecode 0.04.6
+
+	* Support for a lot of various less common variants of Latin
+	  letters and digraphs.
+	* Fixes to Czech pangram transliteration (thanks to Jan Killian)
+
 2010-10-15	unidecode 0.04.5
 
 	* Unit test fixes.
@@ -6,7 +12,7 @@
 
 	* Unit tests for Python 3 and simplified transliteration
 	  code (thanks to Thomas Kluyver)
-	* Support for mathematical versions of latin and greek alphabets 
+	* Support for mathematical versions of Latin and Greek alphabets 
 	  and digits.
 
 2010-01-12	unidecode 0.04.3
