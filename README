@@ -58,11 +58,11 @@ AVAILABILITY
     The latest version of Unidecode is available from the GIT
     repository at
 
-	http://code.zemanta.com/tsolc/git/wikiprep
+	http://code.zemanta.com/tsolc/git/unidecode
 
     You can get it by running:
 
-	git clone http://code.zemanta.com/tsolc/git/wikiprep
+	git clone http://code.zemanta.com/tsolc/git/unidecode
 
 
 COPYRIGHT
