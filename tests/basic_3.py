@@ -17,7 +17,7 @@ class TestUnidecode(unittest.TestCase):
 			
 	def test_circled_latin(self):
 		# 1 sequence of a-z
-		for n in xrange(0, 26):
+		for n in range(0, 26):
 			a = chr(ord('a') + n)
 			b = unidecode(chr(0x24d0 + n))
 
