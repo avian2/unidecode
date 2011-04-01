@@ -1,6 +1,20 @@
 # -*- coding: utf-8 -*-
 import unittest
+import sys
 from unidecode import unidecode
+
+# workaround for Python < 2.7
+if not hasattr(unittest, 'skipIf'):
+	def skipIf(condition, reason):
+		def d(f):
+			def df(*args):
+				if condition:
+					print "skipped %r" % (reason,)
+				else:
+					return f(*args)
+			return df
+		return d
+	unittest.skipIf = skipIf
 
 class TestUnidecode(unittest.TestCase):
 	def test_ascii(self):
@@ -23,6 +37,7 @@ class TestUnidecode(unittest.TestCase):
 
 			self.failUnlessEqual(b, a)
 
+	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
 	def test_mathematical_latin(self):
 		# 13 consecutive sequences of A-Z, a-z with some codepoints
 		# undefined. We just count the undefined ones and don't check
@@ -42,6 +57,7 @@ class TestUnidecode(unittest.TestCase):
 
 		self.failUnlessEqual(empty, 24)
 
+	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
 	def test_mathematical_digits(self):
 		# 5 consecutive sequences of 0-9
 		for n in xrange(0x1d7ce, 0x1d800):
@@ -97,7 +113,15 @@ class TestUnidecode(unittest.TestCase):
 				# Table that has less than 256 entriees
 				(u'\u1eff',
 				''),
+			]
 
+		for input, output in TESTS:
+			self.failUnlessEqual(unidecode(input), output)
+
+	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
+	def test_specific_wide(self):
+
+		TESTS = [
 				# Non-BMP character
 				(u'\U0001d5a0',
 				'A'),

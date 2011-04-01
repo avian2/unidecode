@@ -36,6 +36,11 @@ DESCRIPTION
 REQUIREMENTS
 
     Nothing except Python itself.
+    
+    You will need a Python build with "wide" Unicode characters in order
+    for unidecode to work correctly with characters outside of Basic
+    Multilingual Plane. Surrogate pair encoding of "narrow" builds is not
+    supported.
 
 
 INSTALLATION

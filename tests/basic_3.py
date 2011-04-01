@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import unittest
+import sys
 from unidecode import unidecode
 
 class TestUnidecode(unittest.TestCase):
@@ -22,6 +23,7 @@ class TestUnidecode(unittest.TestCase):
 
 			self.failUnlessEqual(b, a)
 
+	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
 	def test_mathematical_latin(self):
 		# 13 consecutive sequences of A-Z, a-z with some codepoints
 		# undefined. We just count the undefined ones and don't check
@@ -41,6 +43,7 @@ class TestUnidecode(unittest.TestCase):
 				
 		self.failUnlessEqual(empty, 24)
 				
+	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
 	def test_mathematical_digits(self):
 		# 5 consecutive sequences of 0-9
 		for n in range(0x1d7ce, 0x1d800):
@@ -96,7 +99,15 @@ class TestUnidecode(unittest.TestCase):
 				# Table that has less than 256 entriees
 				('\u1eff',
 				''),
+			]
 
+		for instr, output in TESTS:
+			self.failUnlessEqual(unidecode(instr), output)
+
+	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
+	def test_specific_wide(self):
+
+		TESTS = [
 				# Non-BMP character
 				('\U0001d5a0',
 				'A'),
