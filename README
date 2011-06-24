@@ -36,6 +36,11 @@ DESCRIPTION
 REQUIREMENTS
 
     Nothing except Python itself.
+    
+    You will need a Python build with "wide" Unicode characters in order
+    for unidecode to work correctly with characters outside of Basic
+    Multilingual Plane. Surrogate pair encoding of "narrow" builds is not
+    supported.
 
 
 INSTALLATION
@@ -58,20 +63,20 @@ AVAILABILITY
     The latest version of Unidecode is available from the GIT
     repository at
 
-	http://code.zemanta.com/tsolc/git/wikiprep
+	http://code.zemanta.com/tsolc/git/unidecode
 
     You can get it by running:
 
-	git clone http://code.zemanta.com/tsolc/git/wikiprep
+	git clone http://code.zemanta.com/tsolc/git/unidecode
 
 
 COPYRIGHT
 
-Character transliteration tables:
+Original character transliteration tables:
 
 Copyright 2001, Sean M. Burke <sburke@cpan.org>, all rights reserved.
 
-Python code:
+Python code and later additions:
 
 Copyright 2011, Tomaz Solc <tomaz@zemanta.com>
 
