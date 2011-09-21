@@ -115,8 +115,10 @@ class TestUnidecode(unittest.TestCase):
 				''),
 			]
 
-		for input, output in TESTS:
-			self.failUnlessEqual(unidecode(input), output)
+		for input, correct_output in TESTS:
+			test_output = unidecode(input)
+			self.failUnlessEqual(test_output, correct_output)
+			self.failUnless(isinstance(test_output, str))
 
 	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
 	def test_specific_wide(self):
@@ -131,8 +133,10 @@ class TestUnidecode(unittest.TestCase):
 				'km/h'),
 			]
 
-		for input, output in TESTS:
-			self.failUnlessEqual(unidecode(input), output)
+		for input, correct_output in TESTS:
+			test_output = unidecode(input)
+			self.failUnlessEqual(test_output, correct_output)
+			self.failUnless(isinstance(test_output, str))
 
 if __name__ == "__main__":
     unittest.main()

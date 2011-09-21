@@ -28,7 +28,7 @@ def unidecode(string):
         codepoint = ord(char)
 
         if codepoint < 0x80: # Basic ASCII
-            retval.append(char)
+            retval.append(str(char))
             continue
         
         if codepoint > 0xeffff:
