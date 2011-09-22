@@ -1,6 +1,8 @@
 #!/usr/bin/python
+# vim: set fileencoding=utf8 :
 
 from distutils.core import Command, setup
+from sys import version_info
 import unittest
 
 UNITTESTS = [
@@ -25,12 +27,16 @@ class TestCommand(Command):
 
 		result = unittest.TextTestRunner(verbosity=2).run(suite)
 
+author = "Tomaž Šolc"
+if version_info[0] < 3:
+	author = author.decode('utf8')
+
 setup(name='Unidecode',
       version='0.04.8',
       description='ASCII transliterations of Unicode text',
       license='GPL',
       long_description=open("README").read(),
-      author=u'Toma\N{latin small letter z with caron} \N{latin capital letter s with caron}olc',
+      author=author,
       author_email='tomaz.solc@tablix.org',
 
       packages = [ 'unidecode' ],
