@@ -27,31 +27,10 @@ class TestCommand(Command):
 
 setup(name='Unidecode',
       version='0.04.7',
-      description='US-ASCII transliterations of Unicode text',
-      url='http://code.zemanta.com/tsolc/unidecode/',
-      license='Perl',
-      long_description="""
-It often happens that you have non-Roman text data in Unicode, but
-you can't display it -- usually because you're trying to show it
-to a user via an application that doesn't support Unicode, or
-because the fonts you need aren't accessible. You could represent
-the Unicode characters as "???????" or "\15BA\15A0\1610...", but
-that's nearly useless to the user who actually wants to read what
-the text says.
-
-What Unidecode provides is a function, 'unidecode(...)' that
-takes Unicode data and tries to represent it in ASCII characters 
-(i.e., the universally displayable characters between 0x00 and 0x7F). 
-The representation is almost always an attempt at transliteration 
--- i.e., conveying, in Roman letters, the pronunciation expressed by 
-the text in some other writing system.
-
-For example 'unidecode(u"\u5317\u4EB0")' returns 'Bei Jing'.
-
-This is a Python port of Text::Unidecode Perl module by 
-Sean M. Burke <sburke@cpan.org>.
-      """,
-      author='Tomaz Solc',
+      description='ASCII transliterations of Unicode text',
+      license='GPL',
+      long_description=open("README").read(),
+      author=u'Toma\N{latin small letter z with caron} \N{latin capital letter s with caron}olc',
       author_email='tomaz.solc@tablix.org',
 
       packages = [ 'unidecode' ],
