@@ -44,7 +44,7 @@ Module content
 
 The module exports a single function that takes an Unicode object (Python
 2.x) or string (Python 3.x) and returns a string (that can be encoded to
-ASCII bytes in Python 3.x):
+ASCII bytes in Python 3.x)::
 
     >>> from unidecode import unidecode
     >>> unidecode(u'ko\u017eu\u0161\u010dek')
