@@ -1,3 +1,12 @@
+2011-09-22	unidecode 0.04.8
+
+	* License change to GPL to fit better with other Python modules and
+	  to remove the issue of depending on Perl for licensing terms.
+	* Always return a string object on Python 2.x. Before this patch,
+	  unidecode() returned a unicode object on Python 2.x if the input
+	  was a unicode object that contained ASCII characters. Behaviour
+	  on Python 3.x remains unchanged. (thanks to Wesley Yarde)
+
 2011-04-04	unidecode 0.04.7
 
 	* Unit test fixes for Python builds using 16-bit Unicode
