@@ -26,7 +26,7 @@ class TestCommand(Command):
 		result = unittest.TextTestRunner(verbosity=2).run(suite)
 
 setup(name='Unidecode',
-      version='0.04.8',
+      version='0.04.9',
       description='ASCII transliterations of Unicode text',
       license='GPL',
       long_description=open("README").read(),
