@@ -13,6 +13,9 @@ In Python 3, a standard string object will be returned. If you need bytes, use:
 >>> unidecode("Κνωσός").encode("ascii")
 b'Knosos'
 """
+import warnings
+from sys import version_info
+
 Cache = {}
 
 def unidecode(string):
@@ -21,6 +24,11 @@ def unidecode(string):
     >>> unidecode(u"\u5317\u4EB0")
     "Bei Jing "
     """
+
+    if version_info[0] < 3 and not isinstance(string, unicode):
+        warnings.warn(  "Argument %r is not an unicode object. "
+                        "Passing an encoded string will likely have "
+                        "unexpected results." % (type(string),) , RuntimeWarning)
 
     retval = []
 

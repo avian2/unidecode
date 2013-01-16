@@ -20,7 +20,9 @@ class TestUnidecode(unittest.TestCase):
 	def test_ascii(self):
 		for n in xrange(0,128):
 			t = chr(n)
+			self.failUnlessEqual(unidecode(t), t)
 
+			t = unichr(n)
 			self.failUnlessEqual(unidecode(t), t)
 
 	def test_bmp(self):
