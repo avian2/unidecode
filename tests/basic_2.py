@@ -2,6 +2,7 @@
 import unittest
 import sys
 from unidecode import unidecode
+import warnings
 
 # workaround for Python < 2.7
 if not hasattr(unittest, 'skipIf'):
@@ -18,12 +19,31 @@ if not hasattr(unittest, 'skipIf'):
 
 class TestUnidecode(unittest.TestCase):
 	def test_ascii(self):
+
+		log = []
+		def showwarning_new(message, category, *args):
+			log.append((message, category))
+
+		showwarning_old = warnings.showwarning
+		warnings.showwarning = showwarning_new
+		warnings.filterwarnings("always")
+
 		for n in xrange(0,128):
 			t = chr(n)
 			self.failUnlessEqual(unidecode(t), t)
 
+		# Passing string objects to unidecode should raise a warning
+		self.failUnlessEqual(128, len(log))
+		log = []
+
+		for n in xrange(0,128):
 			t = unichr(n)
 			self.failUnlessEqual(unidecode(t), t)
+
+		# unicode objects shouldn't raise warnings
+		self.failUnlessEqual(0, len(log))
+
+		warnings.showwarning = showwarning_old
 
 	def test_bmp(self):
 		for n in xrange(0,0x10000):
