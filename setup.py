@@ -1,10 +1,11 @@
 #!/usr/bin/python
 
 from distutils.core import Command, setup
+from sys import version_info
 import unittest
 
 UNITTESTS = [
-		"tests", 
+		"basic",
 	]
 
 class TestCommand(Command):
@@ -19,9 +20,14 @@ class TestCommand(Command):
 	def run(self):
 		suite = unittest.TestSuite()
 
-		suite.addTests( 
-			unittest.defaultTestLoader.loadTestsFromNames( 
-								UNITTESTS ) )
+		if version_info[0] >= 3:
+			version = "_3"
+		else:
+			version = "_2"
+
+		suite.addTests(
+			unittest.defaultTestLoader.loadTestsFromNames(
+				"tests." + test + version for test in UNITTESTS) )
 
 		result = unittest.TextTestRunner(verbosity=2).run(suite)
 
