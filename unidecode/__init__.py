@@ -28,7 +28,8 @@ def unidecode(string):
     if version_info[0] < 3 and not isinstance(string, unicode):
         warnings.warn(  "Argument %r is not an unicode object. "
                         "Passing an encoded string will likely have "
-                        "unexpected results." % (type(string),) , RuntimeWarning)
+                        "unexpected results." % (type(string),),
+			RuntimeWarning, 2)
 
     retval = []
 
