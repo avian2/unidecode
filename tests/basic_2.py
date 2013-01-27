@@ -22,7 +22,11 @@ class TestUnidecode(unittest.TestCase):
 
 		log = []
 		def showwarning_new(message, category, *args):
-			log.append((message, category))
+			if ("not an unicode object" in str(message)) and \
+					(category is RuntimeWarning):
+				log.append((message, category))
+			else:
+				showwarning_old(message, category, *args)
 
 		showwarning_old = warnings.showwarning
 		warnings.showwarning = showwarning_new
