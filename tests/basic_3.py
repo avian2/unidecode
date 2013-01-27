@@ -7,7 +7,7 @@ class TestUnidecode(unittest.TestCase):
 	def test_ascii(self):
 		for n in range(0,128):
 			t = chr(n)
-			self.failUnlessEqual(unidecode(t), t)
+			self.assertEqual(unidecode(t), t)
 
 	def test_bmp(self):
 		for n in range(0,0x10000):
@@ -21,7 +21,7 @@ class TestUnidecode(unittest.TestCase):
 			a = chr(ord('a') + n)
 			b = unidecode(chr(0x24d0 + n))
 
-			self.failUnlessEqual(b, a)
+			self.assertEqual(b, a)
 
 	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
 	def test_mathematical_latin(self):
@@ -39,9 +39,9 @@ class TestUnidecode(unittest.TestCase):
 			if not b:
 			    empty += 1
 			else:
-			    self.failUnlessEqual(b, a)
+			    self.assertEqual(b, a)
 				
-		self.failUnlessEqual(empty, 24)
+		self.assertEqual(empty, 24)
 				
 	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
 	def test_mathematical_digits(self):
@@ -50,7 +50,7 @@ class TestUnidecode(unittest.TestCase):
 			a = chr(ord('0') + (n-0x1d7ce) % 10)
 			b = unidecode(chr(n))
 			
-			self.failUnlessEqual(b, a)
+			self.assertEqual(b, a)
 
 	def test_specific(self):
 
@@ -103,8 +103,8 @@ class TestUnidecode(unittest.TestCase):
 
 		for instr, correct_output in TESTS:
 			test_output = unidecode(instr)
-			self.failUnlessEqual(test_output, correct_output)
-			self.failUnless(isinstance(test_output, str))
+			self.assertEqual(test_output, correct_output)
+			self.assertTrue(isinstance(test_output, str))
 
 	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
 	def test_specific_wide(self):
@@ -121,5 +121,5 @@ class TestUnidecode(unittest.TestCase):
 
 		for instr, correct_output in TESTS:
 			test_output = unidecode(instr)
-			self.failUnlessEqual(test_output, correct_output)
-			self.failUnless(isinstance(test_output, str))
+			self.assertEqual(test_output, correct_output)
+			self.assertTrue(isinstance(test_output, str))

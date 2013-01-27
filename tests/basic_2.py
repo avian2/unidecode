@@ -34,18 +34,18 @@ class TestUnidecode(unittest.TestCase):
 
 		for n in xrange(0,128):
 			t = chr(n)
-			self.failUnlessEqual(unidecode(t), t)
+			self.assertEqual(unidecode(t), t)
 
 		# Passing string objects to unidecode should raise a warning
-		self.failUnlessEqual(128, len(log))
+		self.assertEqual(128, len(log))
 		log = []
 
 		for n in xrange(0,128):
 			t = unichr(n)
-			self.failUnlessEqual(unidecode(t), t)
+			self.assertEqual(unidecode(t), t)
 
 		# unicode objects shouldn't raise warnings
-		self.failUnlessEqual(0, len(log))
+		self.assertEqual(0, len(log))
 
 		warnings.showwarning = showwarning_old
 
@@ -61,7 +61,7 @@ class TestUnidecode(unittest.TestCase):
 			a = chr(ord('a') + n)
 			b = unidecode(unichr(0x24d0 + n))
 
-			self.failUnlessEqual(b, a)
+			self.assertEqual(b, a)
 
 	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
 	def test_mathematical_latin(self):
@@ -79,9 +79,9 @@ class TestUnidecode(unittest.TestCase):
 			if not b:
 				empty += 1
 			else:
-				self.failUnlessEqual(b, a)
+				self.assertEqual(b, a)
 
-		self.failUnlessEqual(empty, 24)
+		self.assertEqual(empty, 24)
 
 	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
 	def test_mathematical_digits(self):
@@ -90,7 +90,7 @@ class TestUnidecode(unittest.TestCase):
 			a = chr(ord('0') + (n-0x1d7ce) % 10)
 			b = unidecode(unichr(n))
 
-			self.failUnlessEqual(b, a)
+			self.assertEqual(b, a)
 
 	def test_specific(self):
 
@@ -143,8 +143,8 @@ class TestUnidecode(unittest.TestCase):
 
 		for input, correct_output in TESTS:
 			test_output = unidecode(input)
-			self.failUnlessEqual(test_output, correct_output)
-			self.failUnless(isinstance(test_output, str))
+			self.assertEqual(test_output, correct_output)
+			self.assertTrue(isinstance(test_output, str))
 
 	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
 	def test_specific_wide(self):
@@ -161,8 +161,8 @@ class TestUnidecode(unittest.TestCase):
 
 		for input, correct_output in TESTS:
 			test_output = unidecode(input)
-			self.failUnlessEqual(test_output, correct_output)
-			self.failUnless(isinstance(test_output, str))
+			self.assertEqual(test_output, correct_output)
+			self.assertTrue(isinstance(test_output, str))
 
 if __name__ == "__main__":
     unittest.main()
