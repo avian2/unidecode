@@ -1,3 +1,12 @@
+2013-05-30	unidecode 0.04.13
+
+	* Use German transliteration for Latin characters with umlauts.
+	  (thanks to Geoffrey Teale)
+	* Fixed transliteration for several rarely used punctuation
+	  characters.
+	* Add transliteration for trademark and similar signs. (thanks to
+	  Ovanes Markaryan)
+
 2013-01-28	unidecode 0.04.12
 
 	* Tests now pass on Python 2.7.
