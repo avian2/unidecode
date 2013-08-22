@@ -338,6 +338,14 @@ class TestUnidecode(unittest.TestCase):
 			# grave accent
 			chr(199)+chr(155) : 'U', chr(199)+chr(156) : 'u',
 
+			chr(195)+chr(132) : 'A',
+			chr(195)+chr(150) : 'O',
+			chr(195)+chr(156) : 'U',
+			#chr(195)+chr(159) : 's',
+			chr(195)+chr(164) : 'a',
+			chr(195)+chr(182) : 'o',
+			chr(195)+chr(188) : 'u',
+
 			# Known differences:
 
 			#chr(195)+chr(158) : 'TH',
@@ -350,16 +358,6 @@ class TestUnidecode(unittest.TestCase):
 
 			# GBP (Pound) Sign
 			#chr(194)+chr(163) : '',
-
-			# unidecode uses German transliterations for umlauts:
-
-			#chr(195)+chr(132) : 'A',
-			#chr(195)+chr(150) : 'O',
-			#chr(195)+chr(156) : 'U',
-			#chr(195)+chr(159) : 's',
-			#chr(195)+chr(164) : 'a',
-			#chr(195)+chr(182) : 'o',
-			#chr(195)+chr(188) : 'u',
 		}
 
 		for utf8_input, correct_output in wp_remove_accents.iteritems():
