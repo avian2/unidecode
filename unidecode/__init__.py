@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# vi:tabstop=4:expandtab:sw=4
 """Transliterate Unicode text into plain 7-bit ASCII.
 
 Example usage:
