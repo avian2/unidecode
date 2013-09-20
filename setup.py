@@ -32,7 +32,7 @@ class TestCommand(Command):
 		result = unittest.TextTestRunner(verbosity=2).run(suite)
 
 setup(name='Unidecode',
-      version='0.04.13',
+      version='0.04.14',
       description='ASCII transliterations of Unicode text',
       license='GPL',
       long_description=open("README").read(),
