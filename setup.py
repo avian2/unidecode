@@ -58,5 +58,6 @@ Sean M. Burke <sburke@cpan.org>.
 
       provides = [ 'unidecode' ],
 
-      cmdclass = { 'test': TestCommand }
+      cmdclass = { 'test': TestCommand },
+      url = 'https://github.com/iki/unidecode/'
 )
