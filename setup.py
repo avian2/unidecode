@@ -28,7 +28,6 @@ class TestCommand(Command):
 setup(name='Unidecode',
       version='0.4.7',
       description='US-ASCII transliterations of Unicode text',
-      url='http://code.zemanta.com/tsolc/unidecode/',
       license='Perl',
       long_description="""
 It often happens that you have non-Roman text data in Unicode, but
