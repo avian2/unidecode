@@ -26,7 +26,7 @@ class TestCommand(Command):
 		result = unittest.TextTestRunner(verbosity=2).run(suite)
 
 setup(name='Unidecode',
-      version='0.04.6',
+      version='0.4.7',
       description='US-ASCII transliterations of Unicode text',
       url='http://code.zemanta.com/tsolc/unidecode/',
       license='Perl',
