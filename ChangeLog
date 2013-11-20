@@ -1,3 +1,10 @@
+2013-11-20	unidecode 0.4.8
+
+	* Updates URL and version,
+          thanks to Thomas Grainger (@graingert) and @gbenmartin.
+	* Fixes Chinese Jing transliteration,
+          thanks to Proton (@feisuzhu).
+
 2011-02-16	unidecode 0.04.6
 
 	* Support for a lot of various less common variants of Latin
