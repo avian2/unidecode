@@ -1,6 +1,11 @@
+2014-05-11	unidecode 0.04.16
+
+	* Corrected ChangeLog.
+
 2014-05-11	unidecode 0.04.15
 
 	* Fixed transliteration of Chinese character "Yi". (thanks to Yao Zuo)
+	* Transliterate Euro sign as "EUR". (thanks to Dave Smith)
 
 2013-09-20	unidecode 0.04.14
 
