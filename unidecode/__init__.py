@@ -51,7 +51,7 @@ def unidecode(string):
             table = Cache[section]
         except KeyError:
             try:
-                mod = __import__('unidecode.x%03x'%(section), [], [], ['data'])
+                mod = __import__('unidecode.x%03x'%(section), globals(), locals(), ['data'])
             except ImportError:
                 Cache[section] = None
                 continue   # No match: ignore this character and carry on.
