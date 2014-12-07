@@ -17,37 +17,51 @@ if not hasattr(unittest, 'skipIf'):
 		return d
 	unittest.skipIf = skipIf
 
+class WarningLogger:
+	def __init__(self):
+		self.clear()
+
+	def start(self, filter):
+		self.showwarning_old = warnings.showwarning
+
+		def showwarning_new(message, category, *args):
+			if (filter in str(message)) and \
+					(category is RuntimeWarning):
+				self.log.append((message, category))
+			else:
+				self.showwarning_old(message, category, *args)
+
+		warnings.showwarning = showwarning_new
+		warnings.filterwarnings("always")
+
+	def stop(self):
+		warnings.showwarning = self.showwarning_old
+
+	def clear(self):
+		self.log = []
+
 class TestUnidecode(unittest.TestCase):
 	def test_ascii(self):
 
-		log = []
-		def showwarning_new(message, category, *args):
-			if ("not an unicode object" in str(message)) and \
-					(category is RuntimeWarning):
-				log.append((message, category))
-			else:
-				showwarning_old(message, category, *args)
-
-		showwarning_old = warnings.showwarning
-		warnings.showwarning = showwarning_new
-		warnings.filterwarnings("always")
+		wlog = WarningLogger()
+		wlog.start("not an unicode object")
 
 		for n in xrange(0,128):
 			t = chr(n)
 			self.assertEqual(unidecode(t), t)
 
 		# Passing string objects to unidecode should raise a warning
-		self.assertEqual(128, len(log))
-		log = []
+		self.assertEqual(128, len(wlog.log))
+		wlog.clear()
 
 		for n in xrange(0,128):
 			t = unichr(n)
 			self.assertEqual(unidecode(t), t)
 
 		# unicode objects shouldn't raise warnings
-		self.assertEqual(0, len(log))
+		self.assertEqual(0, len(wlog.log))
 
-		warnings.showwarning = showwarning_old
+		wlog.stop()
 
 	def test_bmp(self):
 		for n in xrange(0,0x10000):
@@ -74,17 +88,8 @@ class TestUnidecode(unittest.TestCase):
 
 		self.assertEqual(s.encode('utf16'), s_sp.encode('utf16'))
 
-		log = []
-		def showwarning_new(message, category, *args):
-			if ("Surrogate character" in str(message)) and \
-					(category is RuntimeWarning):
-				log.append((message, category))
-			else:
-				showwarning_old(message, category, *args)
-
-		showwarning_old = warnings.showwarning
-		warnings.showwarning = showwarning_new
-		warnings.filterwarnings("always")
+		wlog = WarningLogger()
+		wlog.start("Surrogate character")
 
 		a = unidecode(s)
 		a_sp = unidecode(s_sp)
@@ -92,9 +97,9 @@ class TestUnidecode(unittest.TestCase):
 		self.assertEqual('T', a)
 
 		# Two warnings should have been logged
-		self.assertEqual(2, len(log))
+		self.assertEqual(2, len(wlog.log))
 
-		warnings.showwarning = showwarning_old
+		wlog.stop()
 
 	def test_circled_latin(self):
 		# 1 sequence of a-z
