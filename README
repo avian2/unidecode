@@ -92,7 +92,7 @@ Source
 
 You can get the latest development version of Unidecode with::
 
-    git clone http://www.tablix.org/~avian/git/unidecode.git
+    git clone https://www.tablix.org/~avian/git/unidecode.git
 
 
 Support
