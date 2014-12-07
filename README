@@ -60,9 +60,21 @@ Requirements
 
 Nothing except Python itself.
     
-You will need a Python build with "wide" Unicode characters in order for
-unidecode to work correctly with characters outside of Basic Multilingual
-Plane. Surrogate pair encoding of "narrow" builds is not supported.
+You need a Python build with "wide" Unicode characters (also called "UCS-4
+build") in order for unidecode to work correctly with characters outside of
+Basic Multilingual Plane (BMP). Common characters outside BMP are bold, italic,
+script, etc. variants of the Latin alphabet intended for mathematical notation.
+Surrogate pair encoding of "narrow" builds is not supported in unidecode.
+
+If your Python build supports "wide" Unicode the following expression will
+return True::
+
+    >>> import sys
+    >>> sys.maxunicode > 0xffff
+    True
+
+See PEP 261 for details regarding support for "wide" Unicode characters in
+Python.
 
 
 Installation

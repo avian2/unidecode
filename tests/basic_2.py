@@ -51,9 +51,50 @@ class TestUnidecode(unittest.TestCase):
 
 	def test_bmp(self):
 		for n in xrange(0,0x10000):
+			# skip over surrogate pairs, which throw a warning
+			if 0xd800 <= n <= 0xdfff:
+				continue
+
 			# Just check that it doesn't throw an exception
 			t = unichr(n)
 			unidecode(t)
+
+	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
+	def test_surrogate_pairs(self):
+		# same character, written as a non-BMP character and a
+		# surrogate pair
+		s = u'\U0001d4e3'
+
+		# Note: this needs to be constructed at run-time, otherwise
+		# a "wide" Python seems to optimize it automatically into a
+		# single character.
+		s_sp_1 = u'\ud835'
+		s_sp_2 = u'\udce3'
+		s_sp = s_sp_1 + s_sp_2
+
+		self.assertEqual(s.encode('utf16'), s_sp.encode('utf16'))
+
+		log = []
+		def showwarning_new(message, category, *args):
+			if ("Surrogate character" in str(message)) and \
+					(category is RuntimeWarning):
+				log.append((message, category))
+			else:
+				showwarning_old(message, category, *args)
+
+		showwarning_old = warnings.showwarning
+		warnings.showwarning = showwarning_new
+		warnings.filterwarnings("always")
+
+		a = unidecode(s)
+		a_sp = unidecode(s_sp)
+
+		self.assertEqual('T', a)
+
+		# Two warnings should have been logged
+		self.assertEqual(2, len(log))
+
+		warnings.showwarning = showwarning_old
 
 	def test_circled_latin(self):
 		# 1 sequence of a-z

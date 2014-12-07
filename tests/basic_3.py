@@ -11,6 +11,10 @@ class TestUnidecode(unittest.TestCase):
 
 	def test_bmp(self):
 		for n in range(0,0x10000):
+			# skip over surrogate pairs, which throw a warning
+			if 0xd800 <= n <= 0xdfff:
+				continue
+
 			# Just check that it doesn't throw an exception
 			t = chr(n)
 			unidecode(t)

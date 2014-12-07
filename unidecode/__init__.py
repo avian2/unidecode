@@ -44,6 +44,11 @@ def unidecode(string):
         if codepoint > 0xeffff:
             continue # Characters in Private Use Area and above are ignored
 
+        if 0xd800 <= codepoint <= 0xdfff:
+            warnings.warn(  "Surrogate character %r will be ignored. "
+                            "You might be using a narrow Python build." % (char,),
+                            RuntimeWarning, 2)
+
         section = codepoint >> 8   # Chop off the last two hex digits
         position = codepoint % 256 # Last two hex digits
 
