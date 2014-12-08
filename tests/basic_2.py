@@ -73,6 +73,20 @@ class TestUnidecode(unittest.TestCase):
 			t = unichr(n)
 			unidecode(t)
 
+	def test_surrogates(self):
+		wlog = WarningLogger()
+		wlog.start("Surrogate character")
+
+		for n in xrange(0xd800, 0xe000):
+			t = unichr(n)
+			s = unidecode(t)
+
+			# Check that surrogate characters translate to nothing.
+			self.assertEqual('', s)
+
+		wlog.stop()
+		self.assertEqual(0xe000-0xd800, len(wlog.log))
+
 	@unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
 	def test_surrogate_pairs(self):
 		# same character, written as a non-BMP character and a
