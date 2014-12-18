@@ -1,3 +1,11 @@
+2014-12-18	unidecode 0.04.17
+
+	* Add some missing Latin letter variants used by popular "Unicode text
+	  converter" tools.
+	* Issue a warning if a surrogate character is encountered in input.
+	* Corrected module import which might cause unidecode() to raise
+	  AttributeError on some systems. (thanks to Karol Sikora)
+
 2014-05-11	unidecode 0.04.16
 
 	* Corrected ChangeLog.
