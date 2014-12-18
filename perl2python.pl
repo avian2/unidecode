@@ -1,3 +1,6 @@
+# usage:
+#
+# perl perl2python.pl --input=Text-Unidecode-1.00_01/lib/Text/Unidecode --output unidecode
 use Getopt::Long;
 
 my $input = ".";
@@ -21,6 +24,7 @@ sub python_escape {
 # print "$input\n";
 
 push(@INC, $input);
+mkdir $output;
 
 my $n;
 for($n = 0; $n < 256; $n++) {
@@ -31,7 +35,7 @@ for($n = 0; $n < 256; $n++) {
 
 	# print "$n\n";
 
-	open(PYTHON, sprintf(">%s/x%02x.py", $output, $n));
+	open(PYTHON, sprintf(">%s/x%03x.py", $output, $n));
 	print PYTHON "data = (\n";
 
 	my $m = 0;
