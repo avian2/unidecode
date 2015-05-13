@@ -6,7 +6,7 @@ setup(name='Unidecode',
       version='0.04.17',
       description='ASCII transliterations of Unicode text',
       license='GPL',
-      long_description=open("README").read(),
+      long_description=open("README.rst").read(),
       author='Tomaz Solc',
       author_email='tomaz.solc@tablix.org',
 
