@@ -12,6 +12,8 @@ setup(name='Unidecode',
 
       packages = [ 'unidecode' ],
 
+      test_suite = 'tests',
+
       classifiers = [
 	"License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
 	"Programming Language :: Python",
