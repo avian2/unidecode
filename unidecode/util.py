@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 from __future__ import print_function
 import argparse
 import locale
@@ -8,11 +7,9 @@ import warnings
 
 from unidecode import unidecode
 
-
 PY3 = sys.version_info[0] >= 3
 
-
-if __name__ == '__main__':
+def main():
     isatty = sys.stdin.isatty()
     parser = argparse.ArgumentParser('unidecode')
     parser.add_argument('-e',
