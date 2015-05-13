@@ -51,4 +51,4 @@ def main():
     except UnicodeDecodeError as e:
         fatal('Unable to decode input: %s, start: %d, end: %d' % (e.reason, e.start, e.end))
 
-    print(unidecode(stream))
+    sys.stdout.write(unidecode(stream))

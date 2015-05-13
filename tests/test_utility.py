@@ -40,7 +40,7 @@ def temp(content):
 class TestUnidecodeUtility(unittest.TestCase):
 
     TEST_UNICODE = _u('\u9769')
-    TEST_ASCII = 'Ge \n'
+    TEST_ASCII = 'Ge '
 
     def test_encoding_error(self):
         f = temp(self.TEST_UNICODE.encode('sjis'))
