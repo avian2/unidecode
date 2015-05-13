@@ -32,11 +32,10 @@ def main():
         with open(args.file, 'rb') as f:
             stream = f.read()
     else:
-        # In Python 3, stdin.read() is read in the system's locale and returns type str
-        # This returns bytes on Python 3 and str on Python 2
-        f = os.fdopen(sys.stdin.fileno(), 'rb')
-        stream = f.read()
-        f.close()
+        if PY3:
+            stream = sys.stdin.buffer.read()
+        else:
+            stream = sys.stdin.read()
 
     try:
         stream = stream.decode(encoding)
