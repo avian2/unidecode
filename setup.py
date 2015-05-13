@@ -28,6 +28,8 @@ class TestCommand(Command):
 		suite.addTests(
 			unittest.defaultTestLoader.loadTestsFromNames(
 				"tests." + test + version for test in UNITTESTS) )
+		suite.addTests(
+			unittest.defaultTestLoader.loadTestsFromNames(['tests.unidecode_util']))
 
 		result = unittest.TextTestRunner(verbosity=2).run(suite)
 
@@ -42,6 +44,8 @@ setup(name='Unidecode',
       packages = [ 'unidecode' ],
 
       provides = [ 'unidecode' ],
+
+      scripts = [ 'bin/unidecode' ],
 
       cmdclass = { 'test': TestCommand },
 
