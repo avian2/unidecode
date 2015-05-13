@@ -4,6 +4,7 @@ import locale
 import unittest
 import subprocess
 import sys
+import tempfile
 
 PY3 = sys.version_info[0] >= 3
 
@@ -25,57 +26,47 @@ def get_cmd():
 def run(argv):
     cmd = get_cmd()
     p = subprocess.Popen(cmd + argv, stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-    return p.communicate()
+
+    out, err = p.communicate()
+
+    return out.decode('ascii'), err.decode('ascii')
+
+def temp(content):
+    f = tempfile.NamedTemporaryFile()
+    f.write(content)
+    f.flush()
+    return f
 
 class TestUnidecodeUtility(unittest.TestCase):
-    EXPECTED_MIXED = 'n Zhong a na\nn Zhong a na -ba -ba\n\n'
 
-    def test_sjis_error(self):
-        out = run(['tests/data/test-sjis'])[1]
+    TEST_UNICODE = _u('\u9769')
+    TEST_ASCII = 'Ge \n'
+
+    def test_encoding_error(self):
+        f = temp(self.TEST_UNICODE.encode('sjis'))
+        out, err = run(['-e', 'utf8', f.name])
+
         expected = 'Unable to decode input: invalid start byte, start: 0, end: 1\n'
-        if PY3:
-            out = out.decode(locale.getpreferredencoding())
-        self.assertEqual(out, expected)
+        self.assertEqual(err, expected)
 
-    def test_sjis(self):
-        out = run(['-e', 'sjis', 'tests/data/test-sjis'])[0]
-        if PY3:
-            out = out.decode(locale.getpreferredencoding())
-        expected = ('Ge Ming  Ri Ben Yu  m-flonoXin Qu de, DXnioite, Yi Fan '
-                    'Zui Hou noShou Lu ninatsutaQu desu. \n')
-        self.assertEqual(out, expected)
+    def test_file_specified_encoding(self):
+        f = temp(self.TEST_UNICODE.encode('sjis'))
 
-    def test_mixed(self):
-        out = run(['tests/data/test-utf8'])[0]
-        if PY3:
-            out = out.decode(locale.getpreferredencoding())
-        self.assertEqual(out, self.EXPECTED_MIXED)
+        out, err = run(['-e', 'sjis', f.name])
+        self.assertEqual(out, self.TEST_ASCII)
 
-    @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
-    def test_mixed_utf16(self):
-        out = run(['-e', 'utf-16', 'tests/data/test-utf16'])[0]
-        if PY3:
-            out = out.decode(locale.getpreferredencoding())
-        self.assertEqual(out, self.EXPECTED_MIXED)
+    def test_file_default_encoding(self):
+        f = temp(self.TEST_UNICODE.encode(locale.getpreferredencoding()))
+        out, err = run([f.name])
+        self.assertEqual(out, self.TEST_ASCII)
 
-    @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
-    def test_mixed_utf32(self):
-        out = run(['-e', 'utf-32', 'tests/data/test-utf32'])[0]
-        if PY3:
-            out = out.decode(locale.getpreferredencoding())
-        self.assertEqual(out, self.EXPECTED_MIXED)
-
-    def test_mixed_piped(self):
+    def test_file_stdin(self):
         cmd = get_cmd()
-        p1 = subprocess.Popen(['cat', 'tests/data/test-utf8'], stdout=subprocess.PIPE)
-        p2 = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=p1.stdout)
+        p = subprocess.Popen(cmd, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 
-        out = p2.communicate()[0]
-        p1.communicate()
-        if PY3:
-            out = out.decode(locale.getpreferredencoding())
-        self.assertEqual(out, self.EXPECTED_MIXED)
+        out, err = p.communicate(self.TEST_UNICODE.encode(locale.getpreferredencoding()))
+        self.assertEqual(out.decode('ascii'), self.TEST_ASCII)
 
     def test_commandline(self):
-        out = run(['-e', 'utf8', '-c', _u('\u4EB0').encode('utf8')])[0]
-        self.assertEqual(out, 'Jing \n'.encode('ascii'))
+        out = run(['-e', 'sjis', '-c', self.TEST_UNICODE.encode('sjis')])[0]
+        self.assertEqual(out, self.TEST_ASCII)
