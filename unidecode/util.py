@@ -1,3 +1,4 @@
+# vim:ts=4 sw=4 expandtab softtabstop=4
 from __future__ import print_function
 import argparse
 import locale
@@ -10,19 +11,16 @@ from unidecode import unidecode
 PY3 = sys.version_info[0] >= 3
 
 def main():
-    isatty = sys.stdin.isatty()
     parser = argparse.ArgumentParser('unidecode')
     parser.add_argument('-e',
                         '--encoding',
                         nargs=1,
                         metavar='ENCODING',
                         help='Specify an encoding, overriding system default')
-
-    if isatty:
-        parser.add_argument('file',
-                            nargs=1,
-                            metavar='FILE',
-                            help='File to transliterate')
+    parser.add_argument('file',
+                        nargs='?',
+                        metavar='FILE',
+                        help='File to transliterate')
 
     args = parser.parse_args()
     if args.encoding:
@@ -30,8 +28,8 @@ def main():
     else:
         encoding = locale.getpreferredencoding()
 
-    if isatty:
-        with open(args.file[0], 'rb') as f:
+    if args.file:
+        with open(args.file, 'rb') as f:
             stream = f.read()
     else:
         # In Python 3, stdin.read() is read in the system's locale and returns type str
