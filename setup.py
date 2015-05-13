@@ -1,35 +1,6 @@
 #!/usr/bin/python
 
-from distutils.core import Command, setup
-from sys import version_info
-import unittest
-
-UNITTESTS = [
-		"basic",
-	]
-
-class TestCommand(Command):
-	user_options = [ ]
-
-	def initialize_options(self):
-		pass
-
-	def finalize_options(self):
-		pass
-
-	def run(self):
-		suite = unittest.TestSuite()
-
-		if version_info[0] >= 3:
-			version = "_3"
-		else:
-			version = "_2"
-
-		suite.addTests(
-			unittest.defaultTestLoader.loadTestsFromNames(
-				"tests." + test + version for test in UNITTESTS) )
-
-		result = unittest.TextTestRunner(verbosity=2).run(suite)
+from setuptools import setup
 
 setup(name='Unidecode',
       version='0.04.17',
@@ -40,10 +11,6 @@ setup(name='Unidecode',
       author_email='tomaz.solc@tablix.org',
 
       packages = [ 'unidecode' ],
-
-      provides = [ 'unidecode' ],
-
-      cmdclass = { 'test': TestCommand },
 
       classifiers = [
 	"License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
