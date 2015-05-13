@@ -10,22 +10,36 @@ from unidecode import unidecode
 
 PY3 = sys.version_info[0] >= 3
 
+def fatal(msg):
+    sys.stderr.write(msg + "\n")
+    sys.exit(1)
+
 def main():
     default_encoding = locale.getpreferredencoding()
 
     parser = optparse.OptionParser('%prog [options] [FILE]',
             description="Transliterate Unicode text into ASCII. FILE is path to file to transliterate. "
-            "If omitted, standard input is used.")
+            "Standard input is used if FILE is omitted and -c is not specified.")
     parser.add_option('-e', '--encoding', metavar='ENCODING', default=default_encoding,
             help='Specify an encoding (default is %s)' % (default_encoding,))
+    parser.add_option('-c', metavar='TEXT', dest='text',
+            help='Transliterate TEXT instead of FILE')
 
     options, args = parser.parse_args()
 
     encoding = options.encoding
 
     if args:
-        with open(args[0], 'rb') as f:
-            stream = f.read()
+        if options.text:
+            fatal("Can't use both FILE and -c option")
+        else:
+            with open(args[0], 'rb') as f:
+                stream = f.read()
+    elif options.text:
+        if PY3:
+            stream = os.fsencode(options.text)
+        else:
+            stream = options.text
     else:
         if PY3:
             stream = sys.stdin.buffer.read()
@@ -35,8 +49,6 @@ def main():
     try:
         stream = stream.decode(encoding)
     except UnicodeDecodeError as e:
-        msg = 'Unable to decode input: %s, start: %d, end: %d' % (e.reason, e.start, e.end)
-        print(msg, file=sys.stderr)
-        sys.exit(1)
+        fatal('Unable to decode input: %s, start: %d, end: %d' % (e.reason, e.start, e.end))
 
     print(unidecode(stream))

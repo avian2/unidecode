@@ -9,6 +9,13 @@ PY3 = sys.version_info[0] >= 3
 
 here = os.path.dirname(__file__)
 
+if PY3:
+    def _u(x):
+        return x
+else:
+    def _u(x):
+        return x.decode('unicode-escape')
+
 def get_cmd():
     sys_path = os.path.join(here, "..")
 
@@ -68,3 +75,7 @@ class TestUnidecodeUtility(unittest.TestCase):
         if PY3:
             out = out.decode(locale.getpreferredencoding())
         self.assertEqual(out, self.EXPECTED_MIXED)
+
+    def test_commandline(self):
+        out = run(['-e', 'utf8', '-c', _u('\u4EB0').encode('utf8')])[0]
+        self.assertEqual(out, 'Jing \n'.encode('ascii'))
