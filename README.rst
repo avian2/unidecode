@@ -10,10 +10,10 @@ human-readable Unicode strings that should still be somewhat intelligeble
 title). 
 
 In most of these examples you could represent Unicode characters as
-"???" or "\\15BA\\15A0\\1610", to mention two extreme cases. But that's
+`???` or `\\15BA\\15A0\\1610`, to mention two extreme cases. But that's
 nearly useless to someone who actually wants to read what the text says.
 
-What Unidecode provides is a middle road: function unidecode() takes
+What Unidecode provides is a middle road: function `unidecode()` takes
 Unicode data and tries to represent it in ASCII characters (i.e., the
 universally displayable characters between 0x00 and 0x7F), where the
 compromises taken when mapping between two character sets are chosen to be
@@ -35,7 +35,7 @@ built-in functions). It is based on hand-tuned character mappings that for
 example also contain ASCII approximations for symbols and non-Latin
 alphabets.
 
-This is a Python port of Text::Unidecode Perl module by
+This is a Python port of `Text::Unidecode` Perl module by
 Sean M. Burke <sburke@cpan.org>.
 
 
@@ -89,11 +89,11 @@ Python.
 Installation
 ------------
 
-You install Unidecode, as you would install any Python module, by running
-these commands::
+To install Unidecode from the source distribution and run unit tests, use these
+commands::
 
-    python setup.py install
-    python setup.py test
+    $ python setup.py install
+    $ python setup.py test
 
 
 Source
@@ -101,7 +101,7 @@ Source
 
 You can get the latest development version of Unidecode with::
 
-    git clone https://www.tablix.org/~avian/git/unidecode.git
+    $ git clone https://www.tablix.org/~avian/git/unidecode.git
 
 
 Support
