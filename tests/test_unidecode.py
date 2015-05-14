@@ -459,6 +459,7 @@ class TestUnidecode(unittest.TestCase):
 
             self.assertEqual(correct_output, output)
 
+    @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
     def test_unicode_text_converter(self):
         # Examples from http://www.panix.com/~eli/unicode/convert.cgi
         lower = [
