@@ -120,7 +120,10 @@ class TestUnidecode(unittest.TestCase):
         s_sp_2 = _u('\udce3')
         s_sp = s_sp_1 + s_sp_2
 
-        self.assertEqual(s.encode('utf16'), s_sp.encode('utf16'))
+        if sys.version_info < (3,4):
+            self.assertEqual(s.encode('utf16'), s_sp.encode('utf16'))
+        else:
+            self.assertEqual(s.encode('utf16'), s_sp.encode('utf16', errors='surrogatepass'))
 
         wlog = WarningLogger()
         wlog.start("Surrogate character")
