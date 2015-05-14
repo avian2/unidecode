@@ -69,4 +69,4 @@ class TestUnidecodeUtility(unittest.TestCase):
 
     def test_commandline(self):
         out = run(['-e', 'sjis', '-c', self.TEST_UNICODE.encode('sjis')])[0]
-        self.assertEqual(out, self.TEST_ASCII)
+        self.assertEqual(out, self.TEST_ASCII + '\n')

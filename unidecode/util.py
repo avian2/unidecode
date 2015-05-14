@@ -40,6 +40,10 @@ def main():
             stream = os.fsencode(options.text)
         else:
             stream = options.text
+        # add a newline to the string if it comes from the
+        # command line so that the result is printed nicely
+        # on the console.
+        stream += '\n'.encode('ascii')
     else:
         if PY3:
             stream = sys.stdin.buffer.read()
