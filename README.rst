@@ -54,6 +54,15 @@ ASCII bytes in Python 3.x)::
     >>> unidecode(u"\u5317\u4EB0")
     'Bei Jing '
 
+A command line utility is also included (see `unidecode --help` for a full list
+of available options)::
+
+    $ echo hello | unidecode
+    hello
+    $ unidecode -c hello
+    hello
+    $ unidecode hello.txt
+    hello
 
 Requirements
 ------------
