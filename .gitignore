@@ -1,8 +1,9 @@
 build
 dist
+.tox
 MANIFEST
 *.pyc
 *~
 *.bak
-.*
 tools/NamesList.txt
+Unidecode.egg-info
