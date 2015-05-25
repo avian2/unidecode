@@ -14,6 +14,12 @@ setup(name='Unidecode',
 
       test_suite = 'tests',
 
+      entry_points = {
+		'console_scripts': [
+			'unidecode = unidecode.util:main'
+		]
+      },
+
       classifiers = [
 	"License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
 	"Programming Language :: Python",
