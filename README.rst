@@ -54,15 +54,23 @@ ASCII bytes in Python 3.x)::
     >>> unidecode(u"\u5317\u4EB0")
     'Bei Jing '
 
-A command line utility is also included (see `unidecode --help` for a full list
-of available options)::
+A utility is also included that allows you to transliterate text from the
+command line in several ways. Reading from standard input::
 
     $ echo hello | unidecode
     hello
+
+from a command line argument::
+
     $ unidecode -c hello
     hello
+
+or from a file::
+
     $ unidecode hello.txt
     hello
+
+The default encoding used by the utility depends on your system locale. You can specify another encoding with the `-e` argument. See `unidecode --help` for a full list of available options.
 
 Requirements
 ------------
