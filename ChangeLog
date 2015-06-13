@@ -1,3 +1,8 @@
+2015-06-13	unidecode 0.04.18
+
+	* Add a command line utility. (thanks to Andrew Udvare)
+	* Use setuptools for packaging.
+
 2014-12-18	unidecode 0.04.17
 
 	* Add some missing Latin letter variants used by popular "Unicode text
