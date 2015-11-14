@@ -42,9 +42,9 @@ Sean M. Burke <sburke@cpan.org>.
 Module content
 --------------
 
-The module exports a single function that takes an Unicode object (Python
-2.x) or string (Python 3.x) and returns a string (that can be encoded to
-ASCII bytes in Python 3.x)::
+The module exports a function that takes an Unicode object (Python 2.x) or
+string (Python 3.x) and returns a string (that can be encoded to ASCII bytes in
+Python 3.x)::
 
     >>> from unidecode import unidecode
     >>> unidecode(u'ko\u017eu\u0161\u010dek')
@@ -53,6 +53,17 @@ ASCII bytes in Python 3.x)::
     '30 km/h'
     >>> unidecode(u"\u5317\u4EB0")
     'Bei Jing '
+
+For use cases where most strings passed are ASCII and only some occassional
+non-ASCII ones, use the `unidecode_fast` function::
+
+    >>> from unidecode import unidecode_fast
+    >>> unidecode_fast(u'Hello world!')
+    'Hello world!'
+
+This function about five times faster if the string only contains ASCII
+characters, but sligthly slower than using `unidecode` directly non-ASCII chars
+are present.
 
 A utility is also included that allows you to transliterate text from the
 command line in several ways. Reading from standard input::

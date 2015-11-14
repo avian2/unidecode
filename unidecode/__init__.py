@@ -19,18 +19,42 @@ from sys import version_info
 
 Cache = {}
 
+
+def _warn_if_not_unicode(string):
+    if version_info[0] < 3 and not isinstance(string, unicode):
+        warnings.warn(  "Argument %r is not an unicode object. "
+                        "Passing an encoded string will likely have "
+                        "unexpected results." % (type(string),),
+                        RuntimeWarning, 2)
+
+
+def unidecode_fast(string):
+    """
+    Try to transliterate using ASCII codec. If it fails, fall back to
+    transliteration using the character tables.
+
+    This is approx. five times faster if the string only contains ASCII
+    characters, but sligthly slower than using unidecode directly non-ASCII
+    chars are present.
+    """
+    _warn_if_not_unicode(string)
+    try:
+        bytestring = string.encode('ASCII')
+    except UnicodeEncodeError:
+        return unidecode(string)
+    if version_info[0] >= 3:
+        return string
+    else:
+        return bytestring
+
+
 def unidecode(string):
     """Transliterate an Unicode object into an ASCII string
 
     >>> unidecode(u"\u5317\u4EB0")
     "Bei Jing "
     """
-
-    if version_info[0] < 3 and not isinstance(string, unicode):
-        warnings.warn(  "Argument %r is not an unicode object. "
-                        "Passing an encoded string will likely have "
-                        "unexpected results." % (type(string),),
-			RuntimeWarning, 2)
+    _warn_if_not_unicode(string)
 
     retval = []
 
