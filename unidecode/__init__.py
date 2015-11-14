@@ -15,9 +15,37 @@ In Python 3, a standard string object will be returned. If you need bytes, use:
 b'Knosos'
 """
 import warnings
+import codecs
 from sys import version_info
 
+PY3 = version_info[0] >= 3
+_u = str if PY3 else unicode
+
 Cache = {}
+
+
+def _handle_unidecode(exception):
+    substr = exception.object[exception.start:exception.end]
+    return (_u(unidecode(substr)), exception.end)
+
+codecs.register_error('unidecode', _handle_unidecode)
+
+
+def unidecode_fast(string):
+    """
+    Transliterate an Unicode object into an ASCII string trying to decode the
+    string using the ASCII charmap, falling back to the original table-based
+    transliteration function for non-ASCII chars.
+
+    This function is about an order or magnitude faster when working with
+    all-ASCII strings, but slightly slower otherwise.
+    """
+    encoded = string.encode("ASCII", "unidecode")
+    if PY3:
+        return encoded.decode("ASCII")
+    else:
+        return encoded
+
 
 def unidecode(string):
     """Transliterate an Unicode object into an ASCII string
@@ -26,11 +54,11 @@ def unidecode(string):
     "Bei Jing "
     """
 
-    if version_info[0] < 3 and not isinstance(string, unicode):
+    if not PY3 and not isinstance(string, unicode):
         warnings.warn(  "Argument %r is not an unicode object. "
                         "Passing an encoded string will likely have "
                         "unexpected results." % (type(string),),
-			RuntimeWarning, 2)
+                        RuntimeWarning, 2)
 
     retval = []
 

@@ -54,6 +54,17 @@ ASCII bytes in Python 3.x)::
     >>> unidecode(u"\u5317\u4EB0")
     'Bei Jing '
 
+For use cases where most strings passed are ASCII and only some occassional
+non-ASCII ones, use the `unidecode_fast` function::
+
+    >>> from unidecode import unidecode_fast
+    >>> unidecode_fast(u'Hello world!')
+    'Hello world!'
+
+This function about an order of magnitude faster if the string only contains
+ASCII characters, but sligthly slower than using `unidecode` directly when
+non-ASCII chars are present.
+
 A utility is also included that allows you to transliterate text from the
 command line in several ways. Reading from standard input::
 
