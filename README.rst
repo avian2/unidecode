@@ -55,10 +55,10 @@ Python 3.x)::
     'Bei Jing '
 
 For use cases where most strings passed are ASCII and only some occassional
-non-ASCII ones, use the `unidecode_fast` function::
+non-ASCII ones, use the `unidecode_expect_ascii` function::
 
-    >>> from unidecode import unidecode_fast
-    >>> unidecode_fast(u'Hello world!')
+    >>> from unidecode import unidecode_expect_ascii
+    >>> unidecode_expect_ascii(u'Hello world!')
     'Hello world!'
 
 This function about five times faster if the string only contains ASCII

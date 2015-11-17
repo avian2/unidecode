@@ -2,7 +2,7 @@
 # vim:ts=4 sw=4 expandtab softtabstop=4
 import unittest
 import sys
-from unidecode import unidecode, unidecode_fast
+from unidecode import unidecode, unidecode_expect_ascii
 import warnings
 
 # workaround for Python < 2.7
@@ -505,11 +505,11 @@ class TestUnidecode(unittest.TestCase):
 
 class TestUnidecodeFast(unittest.TestCase):
     def test_ascii_fast(self):
-        out = unidecode_fast(_u('Hello, World!'))
+        out = unidecode_expect_ascii(_u('Hello, World!'))
         self.assertEqual(out, 'Hello, World!')
 
     def test_nonascii_fast(self):
-        out = unidecode_fast(_u('příliš žluťoučký kůň pěl ďábelské ódy'))
+        out = unidecode_expect_ascii(_u('příliš žluťoučký kůň pěl ďábelské ódy'))
         self.assertEqual(out, 'prilis zlutoucky kun pel dabelske ody')
 
 

@@ -28,7 +28,7 @@ def _warn_if_not_unicode(string):
                         RuntimeWarning, 2)
 
 
-def unidecode_fast(string):
+def unidecode_expect_ascii(string):
     """
     Try to transliterate using ASCII codec. If it fails, fall back to
     transliteration using the character tables.
@@ -41,20 +41,24 @@ def unidecode_fast(string):
     try:
         bytestring = string.encode('ASCII')
     except UnicodeEncodeError:
-        return unidecode(string)
+        return _unidecode(string)
     if version_info[0] >= 3:
         return string
     else:
         return bytestring
 
+def unidecode_expect_nonascii(string):
+    _warn_if_not_unicode(string)
+    return _unidecode(string)
 
-def unidecode(string):
+unidecode = unidecode_expect_ascii
+
+def _unidecode(string):
     """Transliterate an Unicode object into an ASCII string
 
     >>> unidecode(u"\u5317\u4EB0")
     "Bei Jing "
     """
-    _warn_if_not_unicode(string)
 
     retval = []
 
