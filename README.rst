@@ -54,17 +54,6 @@ Python 3.x)::
     >>> unidecode(u"\u5317\u4EB0")
     'Bei Jing '
 
-For use cases where most strings passed are ASCII and only some occassional
-non-ASCII ones, use the `unidecode_expect_ascii` function::
-
-    >>> from unidecode import unidecode_expect_ascii
-    >>> unidecode_expect_ascii(u'Hello world!')
-    'Hello world!'
-
-This function about five times faster if the string only contains ASCII
-characters, but sligthly slower than using `unidecode` directly non-ASCII chars
-are present.
-
 A utility is also included that allows you to transliterate text from the
 command line in several ways. Reading from standard input::
 
@@ -113,6 +102,28 @@ commands::
 
     $ python setup.py install
     $ python setup.py test
+
+
+Performance notes
+-----------------
+
+By default, `unidecode` optimizes for the use case where most of the strings
+passed to it are already ASCII-only and no transliteration is necessary (this
+default might change in future versions).
+
+For performance critical applications, two additional functions are exposed:
+
+`unidecode_expect_ascii` is optimized for ASCII-only inputs (approximately 5
+times faster than `unidecode_expect_nonascii` on 10 character strings, more on
+longer strings), but slightly slower for non-ASCII inputs.
+
+`unidecode_expect_nonascii` takes approximately the same amount of time on
+ASCII and non-ASCII inputs, but is slightly faster for non-ASCII inputs than
+`unidecode_expect_ascii`.
+
+Apart from differences in run time, both functions produce identical results.
+For most users of Unidecode, the difference in performance should be
+negligible.
 
 
 Source
