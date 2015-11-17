@@ -2,7 +2,7 @@
 # vim:ts=4 sw=4 expandtab softtabstop=4
 import unittest
 import sys
-from unidecode import unidecode, unidecode_expect_ascii
+from unidecode import unidecode, unidecode_expect_ascii, unidecode_expect_nonascii
 import warnings
 
 # workaround for Python < 2.7
@@ -55,7 +55,7 @@ else:
         else:
             return x.decode('unicode-escape')
 
-class TestUnidecode(unittest.TestCase):
+class BaseTestUnidecode():
     @unittest.skipIf(sys.version_info[0] >= 3, "not python 2")
     def test_ascii_warning(self):
         wlog = WarningLogger()
@@ -63,7 +63,7 @@ class TestUnidecode(unittest.TestCase):
 
         for n in range(0,128):
             t = chr(n)
-            self.assertEqual(unidecode(t), t)
+            self.assertEqual(self.unidecode(t), t)
 
         # Passing string objects to unidecode should raise a warning
         self.assertEqual(128, len(wlog.log))
@@ -76,7 +76,7 @@ class TestUnidecode(unittest.TestCase):
 
         for n in range(0,128):
             t = _chr(n)
-            self.assertEqual(unidecode(t), t)
+            self.assertEqual(self.unidecode(t), t)
 
         # unicode objects shouldn't raise warnings
         self.assertEqual(0, len(wlog.log))
@@ -91,7 +91,7 @@ class TestUnidecode(unittest.TestCase):
 
             # Just check that it doesn't throw an exception
             t = _chr(n)
-            unidecode(t)
+            self.unidecode(t)
 
     def test_surrogates(self):
         wlog = WarningLogger()
@@ -99,7 +99,7 @@ class TestUnidecode(unittest.TestCase):
 
         for n in range(0xd800, 0xe000):
             t = _chr(n)
-            s = unidecode(t)
+            s = self.unidecode(t)
 
             # Check that surrogate characters translate to nothing.
             self.assertEqual('', s)
@@ -128,8 +128,8 @@ class TestUnidecode(unittest.TestCase):
         wlog = WarningLogger()
         wlog.start("Surrogate character")
 
-        a = unidecode(s)
-        a_sp = unidecode(s_sp)
+        a = self.unidecode(s)
+        a_sp = self.unidecode(s_sp)
 
         self.assertEqual('T', a)
 
@@ -142,7 +142,7 @@ class TestUnidecode(unittest.TestCase):
         # 1 sequence of a-z
         for n in range(0, 26):
             a = chr(ord('a') + n)
-            b = unidecode(_chr(0x24d0 + n))
+            b = self.unidecode(_chr(0x24d0 + n))
 
             self.assertEqual(b, a)
 
@@ -157,7 +157,7 @@ class TestUnidecode(unittest.TestCase):
                 a = chr(ord('A') + n % 26)
             else:
                 a = chr(ord('a') + n % 26)
-            b = unidecode(_chr(n))
+            b = self.unidecode(_chr(n))
 
             if not b:
                 empty += 1
@@ -171,7 +171,7 @@ class TestUnidecode(unittest.TestCase):
         # 5 consecutive sequences of 0-9
         for n in range(0x1d7ce, 0x1d800):
             a = chr(ord('0') + (n-0x1d7ce) % 10)
-            b = unidecode(_chr(n))
+            b = self.unidecode(_chr(n))
 
             self.assertEqual(b, a)
 
@@ -225,7 +225,7 @@ class TestUnidecode(unittest.TestCase):
             ]
 
         for input, correct_output in TESTS:
-            test_output = unidecode(input)
+            test_output = self.unidecode(input)
             self.assertEqual(test_output, correct_output)
             self.assertTrue(isinstance(test_output, str))
 
@@ -246,7 +246,7 @@ class TestUnidecode(unittest.TestCase):
             ]
 
         for input, correct_output in TESTS:
-            test_output = unidecode(input)
+            test_output = self.unidecode(input)
             self.assertEqual(test_output, correct_output)
             self.assertTrue(isinstance(test_output, str))
 
@@ -455,7 +455,7 @@ class TestUnidecode(unittest.TestCase):
             else:
                 inp = ''.join(map(chr, utf8_input)).decode('utf8')
 
-            output = unidecode(inp)
+            output = self.unidecode(inp)
 
             self.assertEqual(correct_output, output)
 
@@ -478,7 +478,7 @@ class TestUnidecode(unittest.TestCase):
         ]
 
         for s in lower:
-            o = unidecode(s)
+            o = self.unidecode(s)
 
             self.assertEqual('the quick brown fox jumps over the lazy dog 1234567890', o)
 
@@ -498,20 +498,18 @@ class TestUnidecode(unittest.TestCase):
         ]
 
         for s in upper:
-            o = unidecode(s)
+            o = self.unidecode(s)
 
             self.assertEqual('THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG 1234567890', o)
 
+class TestUnidecode(BaseTestUnidecode, unittest.TestCase):
+    unidecode = staticmethod(unidecode)
 
-class TestUnidecodeFast(unittest.TestCase):
-    def test_ascii_fast(self):
-        out = unidecode_expect_ascii(_u('Hello, World!'))
-        self.assertEqual(out, 'Hello, World!')
+class TestUnidecodeExpectASCII(BaseTestUnidecode, unittest.TestCase):
+    unidecode = staticmethod(unidecode_expect_ascii)
 
-    def test_nonascii_fast(self):
-        out = unidecode_expect_ascii(_u('příliš žluťoučký kůň pěl ďábelské ódy'))
-        self.assertEqual(out, 'prilis zlutoucky kun pel dabelske ody')
-
+class TestUnidecodeExpectNonASCII(BaseTestUnidecode, unittest.TestCase):
+    unidecode = staticmethod(unidecode_expect_nonascii)
 
 if __name__ == "__main__":
     unittest.main()
