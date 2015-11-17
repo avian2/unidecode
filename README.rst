@@ -5,7 +5,7 @@ It often happens that you have text data in Unicode, but you need to
 represent it in ASCII. For example when integrating with legacy code that
 doesn't support Unicode, or for ease of entry of non-Roman names on a US
 keyboard, or when constructing ASCII machine identifiers from
-human-readable Unicode strings that should still be somewhat intelligeble
+human-readable Unicode strings that should still be somewhat intelligible
 (a popular example of this is when making an URL slug from an article
 title). 
 
