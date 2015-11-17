@@ -63,7 +63,10 @@ class BaseTestUnidecode():
 
         for n in range(0,128):
             t = chr(n)
-            self.assertEqual(self.unidecode(t), t)
+
+            r = self.unidecode(t)
+            self.assertEqual(r, t)
+            self.assertEqual(type(r), str)
 
         # Passing string objects to unidecode should raise a warning
         self.assertEqual(128, len(wlog.log))
@@ -76,7 +79,10 @@ class BaseTestUnidecode():
 
         for n in range(0,128):
             t = _chr(n)
-            self.assertEqual(self.unidecode(t), t)
+
+            r = self.unidecode(t)
+            self.assertEqual(r, t)
+            self.assertEqual(type(r), str)
 
         # unicode objects shouldn't raise warnings
         self.assertEqual(0, len(wlog.log))
