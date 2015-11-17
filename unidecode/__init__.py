@@ -29,14 +29,20 @@ def _warn_if_not_unicode(string):
 
 
 def unidecode_expect_ascii(string):
-    """
-    Try to transliterate using ASCII codec. If it fails, fall back to
+    """Transliterate an Unicode object into an ASCII string
+
+    >>> unidecode(u"\u5317\u4EB0")
+    "Bei Jing "
+
+    This function first tries to convert the string using ASCII codec.
+    If it fails (because of non-ASCII characters), it falls back to
     transliteration using the character tables.
 
     This is approx. five times faster if the string only contains ASCII
-    characters, but sligthly slower than using unidecode directly non-ASCII
+    characters, but sligthly slower than using unidecode directly if non-ASCII
     chars are present.
     """
+
     _warn_if_not_unicode(string)
     try:
         bytestring = string.encode('ASCII')
@@ -48,18 +54,18 @@ def unidecode_expect_ascii(string):
         return bytestring
 
 def unidecode_expect_nonascii(string):
-    _warn_if_not_unicode(string)
-    return _unidecode(string)
-
-unidecode = unidecode_expect_ascii
-
-def _unidecode(string):
     """Transliterate an Unicode object into an ASCII string
 
     >>> unidecode(u"\u5317\u4EB0")
     "Bei Jing "
     """
 
+    _warn_if_not_unicode(string)
+    return _unidecode(string)
+
+unidecode = unidecode_expect_ascii
+
+def _unidecode(string):
     retval = []
 
     for char in string:
