@@ -5,7 +5,7 @@ It often happens that you have text data in Unicode, but you need to
 represent it in ASCII. For example when integrating with legacy code that
 doesn't support Unicode, or for ease of entry of non-Roman names on a US
 keyboard, or when constructing ASCII machine identifiers from
-human-readable Unicode strings that should still be somewhat intelligeble
+human-readable Unicode strings that should still be somewhat intelligible
 (a popular example of this is when making an URL slug from an article
 title). 
 
@@ -42,9 +42,9 @@ Sean M. Burke <sburke@cpan.org>.
 Module content
 --------------
 
-The module exports a single function that takes an Unicode object (Python
-2.x) or string (Python 3.x) and returns a string (that can be encoded to
-ASCII bytes in Python 3.x)::
+The module exports a function that takes an Unicode object (Python 2.x) or
+string (Python 3.x) and returns a string (that can be encoded to ASCII bytes in
+Python 3.x)::
 
     >>> from unidecode import unidecode
     >>> unidecode(u'ko\u017eu\u0161\u010dek')
@@ -102,6 +102,28 @@ commands::
 
     $ python setup.py install
     $ python setup.py test
+
+
+Performance notes
+-----------------
+
+By default, `unidecode` optimizes for the use case where most of the strings
+passed to it are already ASCII-only and no transliteration is necessary (this
+default might change in future versions).
+
+For performance critical applications, two additional functions are exposed:
+
+`unidecode_expect_ascii` is optimized for ASCII-only inputs (approximately 5
+times faster than `unidecode_expect_nonascii` on 10 character strings, more on
+longer strings), but slightly slower for non-ASCII inputs.
+
+`unidecode_expect_nonascii` takes approximately the same amount of time on
+ASCII and non-ASCII inputs, but is slightly faster for non-ASCII inputs than
+`unidecode_expect_ascii`.
+
+Apart from differences in run time, both functions produce identical results.
+For most users of Unidecode, the difference in performance should be
+negligible.
 
 
 Source
