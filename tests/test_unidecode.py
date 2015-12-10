@@ -225,7 +225,7 @@ class BaseTestUnidecode():
                 (_u('\ua500'),
                 ''),
 
-                # Table that has less than 256 entriees
+                # Table that has less than 256 entries
                 (_u('\u1eff'),
                 ''),
             ]

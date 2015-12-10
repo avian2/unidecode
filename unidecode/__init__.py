@@ -39,7 +39,7 @@ def unidecode_expect_ascii(string):
     transliteration using the character tables.
 
     This is approx. five times faster if the string only contains ASCII
-    characters, but sligthly slower than using unidecode directly if non-ASCII
+    characters, but slightly slower than using unidecode directly if non-ASCII
     chars are present.
     """
 
