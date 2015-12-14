@@ -97,8 +97,12 @@ Python.
 Installation
 ------------
 
-To install Unidecode from the source distribution and run unit tests, use these
-commands::
+To install the latest version of Unidecode from the Python package index, use
+these commands::
+
+    $ pip install unidecode
+
+To install Unidecode from the source distribution and run unit tests, use::
 
     $ python setup.py install
     $ python setup.py test
