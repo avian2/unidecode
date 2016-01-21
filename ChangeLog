@@ -1,3 +1,9 @@
+2016-01-21	unidecode 0.04.19
+
+	* Add unidecode_expect_ascii() and unidecode_expect_nonascii()
+	  functions for performance critical applications.
+	  (thanks to Israel Saeta Perez)
+
 2015-06-13	unidecode 0.04.18
 
 	* Add a command line utility. (thanks to Andrew Udvare)
