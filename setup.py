@@ -7,7 +7,7 @@ def get_long_description():
 	return open(os.path.join(os.path.dirname(__file__), "README.rst")).read()
 
 setup(name='Unidecode',
-      version='0.04.18',
+      version='0.04.19',
       description='ASCII transliterations of Unicode text',
       license='GPL',
       long_description=get_long_description(),
