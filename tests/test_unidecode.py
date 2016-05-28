@@ -508,6 +508,13 @@ class BaseTestUnidecode():
 
             self.assertEqual('THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG 1234567890', o)
 
+    def test_enclosed_alphanumerics(self):
+        self.assertEqual(
+            'aA20(20)20.20100',
+            self.unidecode(_u('ⓐⒶ⑳⒇⒛⓴⓾⓿')),
+        )
+
+
 class TestUnidecode(BaseTestUnidecode, unittest.TestCase):
     unidecode = staticmethod(unidecode)
 
