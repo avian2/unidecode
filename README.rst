@@ -7,7 +7,7 @@ doesn't support Unicode, or for ease of entry of non-Roman names on a US
 keyboard, or when constructing ASCII machine identifiers from
 human-readable Unicode strings that should still be somewhat intelligible
 (a popular example of this is when making an URL slug from an article
-title). 
+title).
 
 In most of these examples you could represent Unicode characters as
 `???` or `\\15BA\\15A0\\1610`, to mention two extreme cases. But that's
@@ -76,7 +76,7 @@ Requirements
 ------------
 
 Nothing except Python itself.
-    
+
 You need a Python build with "wide" Unicode characters (also called "UCS-4
 build") in order for unidecode to work correctly with characters outside of
 Basic Multilingual Plane (BMP). Common characters outside BMP are bold, italic,
@@ -130,19 +130,12 @@ For most users of Unidecode, the difference in performance should be
 negligible.
 
 
-Source
-------
-
-You can get the latest development version of Unidecode with::
-
-    $ git clone https://www.tablix.org/~avian/git/unidecode.git
-
-
 Support
 -------
 
-Questions, bug reports, useful code bits, and suggestions for Unidecode
-should be sent to tomaz.solc@tablix.org
+The source code is on Github at https://github.com/avian2/unidecode . You can
+open an issue there to report a bug or make a pull request to suggest changes.
+Other feedback can be sent to tomaz.solc@tablix.org .
 
 
 Copyright
