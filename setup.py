@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# vi:tabstop=4:expandtab:sw=4
 
 import os
 from setuptools import setup
