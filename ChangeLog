@@ -1,3 +1,15 @@
+2017-01-09	unidecode 0.04.20
+	* Fixed transliteration of circled Latin letters and numbers
+	  (thanks to Krzysztof Jurewicz).
+	* Add square unit symbols.
+	* Add Latin variants in U+20xx and U+21xx pages.
+	* Fix U+02B1 MODIFIER LETTER SMALL H WITH HOOK.
+	* Fix U+205F MEDIUM MATHEMATICAL SPACE.
+	* Add "DIGIT ... COMMA" and "PARANTHESIZED LATIN CAPITAL LETTER"
+	  in U+1F1xx page.
+	* Add missing vulgar fractions and a/c, a/s, c/o, c/u symbols.
+	* Add universal Wheel release (thanks to Adam Chainz).
+
 2016-01-21	unidecode 0.04.19
 
 	* Add unidecode_expect_ascii() and unidecode_expect_nonascii()
