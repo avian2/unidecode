@@ -137,12 +137,18 @@ You can get the latest development version of Unidecode with::
 
     $ git clone https://www.tablix.org/~avian/git/unidecode.git
 
+There is also an official mirror of this repository on GitHub at
+https://github.com/avian2/unidecode
 
-Support
+
+Contact
 -------
 
-Questions, bug reports, useful code bits, and suggestions for Unidecode
-should be sent to tomaz.solc@tablix.org
+Please send bug reports, patches and suggestions for Unidecode to
+tomaz.solc@tablix.org.
+
+Alternatively, you can also open a ticket or pull request at
+https://github.com/avian2/unidecode
 
 
 Copyright
