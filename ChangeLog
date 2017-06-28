@@ -1,3 +1,7 @@
+2017-06-28	unidecode 0.04.21
+	* Add U+2116 NUMERO SIGN (thanks to Alan Davidson)
+	* Add U+05BE HEBREW PUNCTUATION MAQAF (thanks to Micha Moskovic)
+
 2017-01-09	unidecode 0.04.20
 	* Fixed transliteration of circled Latin letters and numbers
 	  (thanks to Krzysztof Jurewicz).
