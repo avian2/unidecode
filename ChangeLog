@@ -1,3 +1,14 @@
+2018-01-05	unidecode 1.0.22
+	* Move to semantic version numbering, no longer following version
+	  numbers from the original Perl module. This fixes an issue with
+	  setuptools (>= 8) and others expecting major.minor.patch format.
+	  (https://github.com/avian2/unidecode/issues/13)
+	* Add transliterations for currency signs U+20B0 through U+20BF
+	  (thanks to Mike Swanson)
+	* Surround transliterations of vulgar fractions with spaces to avoid
+	  incorrect combinations with adjacent numerals
+	  (thanks to Jeffrey Gerard)
+
 2017-06-28	unidecode 0.04.21
 	* Add U+2116 NUMERO SIGN (thanks to Alan Davidson)
 	* Add U+05BE HEBREW PUNCTUATION MAQAF (thanks to Micha Moskovic)
