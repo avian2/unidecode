@@ -70,7 +70,9 @@ or from a file::
     $ unidecode hello.txt
     hello
 
-The default encoding used by the utility depends on your system locale. You can specify another encoding with the `-e` argument. See `unidecode --help` for a full list of available options.
+The default encoding used by the utility depends on your system locale. You can
+specify another encoding with the `-e` argument. See `unidecode --help` for a
+full list of available options.
 
 Requirements
 ------------
