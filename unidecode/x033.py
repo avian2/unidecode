@@ -139,7 +139,7 @@ data = (
 'kcal',    # 0x89
 'pF',    # 0x8a
 'nF',    # 0x8b
-'microFarad',    # 0x8c
+'microfarad',    # 0x8c
 'microgram',    # 0x8d
 'mg',    # 0x8e
 'kg',    # 0x8f
