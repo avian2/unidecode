@@ -221,8 +221,8 @@ data = (
 'sr',    # 0xdb
 'Sv',    # 0xdc
 'Wb',    # 0xdd
-'[?]',    # 0xde
-'[?]',    # 0xdf
+'V/m',    # 0xde
+'A/m',    # 0xdf
 '1d',    # 0xe0
 '2d',    # 0xe1
 '3d',    # 0xe2
