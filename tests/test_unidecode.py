@@ -5,18 +5,6 @@ import sys
 from unidecode import unidecode, unidecode_expect_ascii, unidecode_expect_nonascii
 import warnings
 
-# workaround for Python < 2.7
-if not hasattr(unittest, 'skipIf'):
-    def skipIf(condition, reason):
-        def d(f):
-            def df(*args):
-                if condition:
-                    print("skipped %r" % (reason,))
-                else:
-                    return f(*args)
-            return df
-        return d
-    unittest.skipIf = skipIf
 
 class WarningLogger:
     def __init__(self):
