@@ -1,9 +1,13 @@
 import locale
 
-lang = locale.getlocale()[0][0:2]
-region = locale.getlocale()[0][3:5]
+lang = ''
+region = ''
 
-t_e4='a'
+if locale.getlocale()[0] is not None:
+    lang = locale.getlocale()[0][0:2]
+    region = locale.getlocale()[0][3:5]
+
+t_e4='a';
 t_f6='o';
 t_fc='u';
 t_c4='A';
