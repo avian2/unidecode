@@ -1,3 +1,28 @@
+import locale
+
+lang = locale.getlocale()[0][0:2]
+region = locale.getlocale()[0][3:5]
+
+t_e4='a'
+t_f6='o';
+t_fc='u';
+t_c4='A';
+t_d6='O';
+t_dc='U';
+t_a3='PS';
+
+if lang == "de":
+    t_e4='ae';
+    t_f6='oe';
+    t_fc='ue';
+    t_c4='AE';
+    t_d6='OE';
+    t_dc='UE';
+
+if region == "GB":
+    t_a3='GBP';
+    
+
 data = (
 # Code points u+007f and below are equivalent to ASCII and are handled by a
 # special case in the code. Hence they are not present in this table.
@@ -47,7 +72,7 @@ data = (
 'C/',    # 0xa2
 
 # Not "GBP" - Pound Sign is used for more than just British Pounds.
-'PS',    # 0xa3
+t_a3,    # 0xa3
 
 '$?',    # 0xa4
 'Y=',    # 0xa5
@@ -86,7 +111,7 @@ data = (
 'A',    # 0xc3
 
 # Not "AE" - used in languages other than German
-'A',    # 0xc4
+t_c4,    # 0xc4
 
 'A',    # 0xc5
 'AE',    # 0xc6
@@ -107,7 +132,7 @@ data = (
 'O',    # 0xd5
 
 # Not "OE" - used in languages other than German
-'O',    # 0xd6
+t_d6,    # 0xd6
 
 'x',    # 0xd7
 'O',    # 0xd8
@@ -116,7 +141,7 @@ data = (
 'U',    # 0xdb
 
 # Not "UE" - used in languages other than German
-'U',    # 0xdc
+t_dc,    # 0xdc
 
 'Y',    # 0xdd
 'Th',    # 0xde
@@ -127,7 +152,7 @@ data = (
 'a',    # 0xe3
 
 # Not "ae" - used in languages other than German
-'a',    # 0xe4
+t_e4,    # 0xe4
 
 'a',    # 0xe5
 'ae',    # 0xe6
@@ -148,7 +173,7 @@ data = (
 'o',    # 0xf5
 
 # Not "oe" - used in languages other than German
-'o',    # 0xf6
+t_f6,    # 0xf6
 
 '/',    # 0xf7
 'o',    # 0xf8
@@ -157,9 +182,10 @@ data = (
 'u',    # 0xfb
 
 # Not "ue" - used in languages other than German
-'u',    # 0xfc
+t_fc,    # 0xfc
 
 'y',    # 0xfd
 'th',    # 0xfe
 'y',    # 0xff
 )
+
