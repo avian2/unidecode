@@ -131,8 +131,9 @@ Unidecode should support localization (e.g. a language or country parameter, ins
 Unidecode should use a permissive license such as MIT or the BSD license.
     The maintainer of Unidecode believes that providing access to source code
     on redistribution is a fair and reasonable request when basing products on
-    voluntary work of many contributors. Please consider using other libraries,
-    such as `text-unidecode <https://github.com/kmike/text-unidecode>`_.
+    voluntary work of many contributors. If the license is not suitable for
+    you, please consider using other libraries, such as `text-unidecode
+    <https://github.com/kmike/text-unidecode>`_.
 
 I've upgraded Unidecode and now some URLs on my website return 404 Not Found.
     This is an issue with the software that is running your website, not
@@ -183,7 +184,7 @@ https://github.com/avian2/unidecode
 Contact
 -------
 
-Please make sure to read the *Frequently asked questions* section above before
+Please make sure to read the `Frequently asked questions`_ section above before
 contacting the maintainer.
 
 Bug reports, patches and suggestions for Unidecode can be sent to
