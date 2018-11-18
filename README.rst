@@ -109,6 +109,43 @@ To install Unidecode from the source distribution and run unit tests, use::
     $ python setup.py install
     $ python setup.py test
 
+Frequently asked questions
+--------------------------
+
+German umlauts are transliterated incorrectly
+    Latin letters "a", "o" and "u" with diaeresis are transliterated by
+    Unidecode as "a", "o", "u", *not* according to German rules "ae", "oe",
+    "ue". This is intentional and will not be changed. Rationale is that these
+    letters are used in languages other than German (for example, Finnish and
+    Turkish). German text transliterated without the extra "e" is much more
+    readable than other languages transliterated using German rules. A
+    workaround is to do your own replacements of these characters before
+    passing the string to `unidecode`.
+
+Unidecode should support localization (e.g. a language or country parameter, inspecting system locale, etc.)
+    Language-specific transliteration is a complicated problem and beyond the
+    scope of this library. Changes related to this will not be accepted. Please
+    consider using other libraries which do provide this capability, such as
+    `Unihandecode <https://github.com/miurahr/unihandecode>`_.
+
+Unidecode should use a permissive license such as MIT or the BSD license.
+    The maintainer of Unidecode believes that providing access to source code
+    on redistribution is a fair and reasonable request when basing products on
+    voluntary work of many contributors. Please consider using other libraries,
+    such as `text-unidecode <https://github.com/kmike/text-unidecode>`_.
+
+I've upgraded Unidecode and now some URLs on my website return 404 Not Found.
+    This is an issue with the software that is running your website, not
+    Unidecode. Occasionally, new versions of Unidecode library are released
+    which contain improvements to the transliteration tables. This means that
+    you cannot rely that `unidecode` output will not change across different
+    versions of Unidecode library. If you use `unidecode` to generate URLs for
+    your website, either generate the URL slug once and store it in the
+    database or lock your dependency to `unidecode` to one specific version.
+
+Some of the issues in this section are discussed in more detail in `this blog
+post <https://www.tablix.org/~avian/blog/archives/2013/09/python_unidecode_release_0_04_14/>`_.
+
 
 Performance notes
 -----------------
@@ -146,7 +183,10 @@ https://github.com/avian2/unidecode
 Contact
 -------
 
-Please send bug reports, patches and suggestions for Unidecode to
+Please make sure to read the *Frequently asked questions* section above before
+contacting the maintainer.
+
+Bug reports, patches and suggestions for Unidecode can be sent to
 tomaz.solc@tablix.org.
 
 Alternatively, you can also open a ticket or pull request at
