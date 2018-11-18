@@ -1,3 +1,12 @@
+2018-11-19	unidecode 1.0.23
+	* Improve transliteration of Hebrew letters (thanks to Alon Bar-Lev)
+	* Add transliterations for the phonetic block U+1D00 - U+1D7F
+	  (thanks to Oscar Laurent)
+	* Transliterate SI "micro" prefix as "u" instead of "micro" in the
+	  U+33xx block.
+	* Add U+33DE SQUARE V OVER M and U+33DF SQUARE A OVER M.
+	* Drop support for Python 2.6 and 3.3 (thanks to Jon Dufresne)
+
 2018-01-05	unidecode 1.0.22
 	* Move to semantic version numbering, no longer following version
 	  numbers from the original Perl module. This fixes an issue with
