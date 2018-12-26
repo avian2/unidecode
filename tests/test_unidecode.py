@@ -77,6 +77,11 @@ class BaseTestUnidecode():
 
         wlog.stop()
 
+    def test_whitespace(self):
+        self.assertEqual(" ", self.unidecode(_chr(0xa0)))
+        self.assertEqual(" ", self.unidecode(_chr(0x2000)))
+        self.assertEqual(" ", self.unidecode(_chr(0x3000)))
+
     def test_bmp(self):
         for n in range(0,0x10000):
             # skip over surrogate pairs, which throw a warning

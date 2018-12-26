@@ -16,6 +16,7 @@ b'Knosos'
 """
 import warnings
 from sys import version_info
+import re
 
 Cache = {}
 
@@ -74,9 +75,13 @@ def _unidecode(string):
         if codepoint < 0x80: # Basic ASCII
             retval.append(str(char))
             continue
-        
+
         if codepoint > 0xeffff:
             continue # Characters in Private Use Area and above are ignored
+
+        if re.match(r"\s",char,re.UNICODE):
+            retval.append(" ")
+            continue
 
         if 0xd800 <= codepoint <= 0xdfff:
             warnings.warn(  "Surrogate character %r will be ignored. "
