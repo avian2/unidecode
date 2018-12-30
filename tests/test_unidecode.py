@@ -101,6 +101,15 @@ class BaseTestUnidecode():
         wlog.stop()
         self.assertEqual(0xe000-0xd800, len(wlog.log))
 
+    def test_space(self):
+        for n in range(0x80, 0x10000):
+            t = _chr(n)
+            if t.isspace():
+                s = self.unidecode(t)
+                self.assertTrue((s == '') or s.isspace(),
+                        'unidecode(%r) should return an empty string or ASCII space, '
+                        'since %r.isspace() is true. Instead it returns %r' % (t, t, s))
+
     @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
     def test_surrogate_pairs(self):
         # same character, written as a non-BMP character and a
