@@ -4,7 +4,6 @@ import optparse
 import locale
 import os
 import sys
-import warnings
 
 from unidecode import unidecode
 
