@@ -7,13 +7,13 @@ doesn't support Unicode, or for ease of entry of non-Roman names on a US
 keyboard, or when constructing ASCII machine identifiers from
 human-readable Unicode strings that should still be somewhat intelligible
 (a popular example of this is when making an URL slug from an article
-title). 
+title).
 
-In most of these examples you could represent Unicode characters as
-`???` or `\\15BA\\15A0\\1610`, to mention two extreme cases. But that's
-nearly useless to someone who actually wants to read what the text says.
+In most of these examples you could represent Unicode characters as ``???`` or
+``\\15BA\\15A0\\1610``, to mention two extreme cases. But that's nearly useless
+to someone who actually wants to read what the text says.
 
-What Unidecode provides is a middle road: function `unidecode()` takes
+What Unidecode provides is a middle road: the function ``unidecode()`` takes
 Unicode data and tries to represent it in ASCII characters (i.e., the
 universally displayable characters between 0x00 and 0x7F), where the
 compromises taken when mapping between two character sets are chosen to be
@@ -35,8 +35,8 @@ built-in functions). It is based on hand-tuned character mappings that for
 example also contain ASCII approximations for symbols and non-Latin
 alphabets.
 
-This is a Python port of `Text::Unidecode` Perl module by
-Sean M. Burke <sburke@cpan.org>.
+This is a Python port of ``Text::Unidecode`` Perl module by Sean M. Burke
+<sburke@cpan.org>.
 
 
 Module content
@@ -71,19 +71,19 @@ or from a file::
     hello
 
 The default encoding used by the utility depends on your system locale. You can
-specify another encoding with the `-e` argument. See `unidecode --help` for a
-full list of available options.
+specify another encoding with the ``-e`` argument. See ``unidecode --help`` for
+a full list of available options.
 
 Requirements
 ------------
 
 Nothing except Python itself.
-    
+
 You need a Python build with "wide" Unicode characters (also called "UCS-4
-build") in order for unidecode to work correctly with characters outside of
+build") in order for Unidecode to work correctly with characters outside of
 Basic Multilingual Plane (BMP). Common characters outside BMP are bold, italic,
 script, etc. variants of the Latin alphabet intended for mathematical notation.
-Surrogate pair encoding of "narrow" builds is not supported in unidecode.
+Surrogate pair encoding of "narrow" builds is not supported in Unidecode.
 
 If your Python build supports "wide" Unicode the following expression will
 return True::
@@ -120,7 +120,7 @@ German umlauts are transliterated incorrectly
     Turkish). German text transliterated without the extra "e" is much more
     readable than other languages transliterated using German rules. A
     workaround is to do your own replacements of these characters before
-    passing the string to `unidecode`.
+    passing the string to ``unidecode()``.
 
 Unidecode should support localization (e.g. a language or country parameter, inspecting system locale, etc.)
     Language-specific transliteration is a complicated problem and beyond the
@@ -139,10 +139,11 @@ I've upgraded Unidecode and now some URLs on my website return 404 Not Found.
     This is an issue with the software that is running your website, not
     Unidecode. Occasionally, new versions of Unidecode library are released
     which contain improvements to the transliteration tables. This means that
-    you cannot rely that `unidecode` output will not change across different
-    versions of Unidecode library. If you use `unidecode` to generate URLs for
-    your website, either generate the URL slug once and store it in the
-    database or lock your dependency to `unidecode` to one specific version.
+    you cannot rely that ``unidecode()`` output will not change across
+    different versions of Unidecode library. If you use ``unidecode()`` to
+    generate URLs for your website, either generate the URL slug once and store
+    it in the database or lock your dependency of Unidecode to one specific
+    version.
 
 Some of the issues in this section are discussed in more detail in `this blog
 post <https://www.tablix.org/~avian/blog/archives/2013/09/python_unidecode_release_0_04_14/>`_.
@@ -151,19 +152,19 @@ post <https://www.tablix.org/~avian/blog/archives/2013/09/python_unidecode_relea
 Performance notes
 -----------------
 
-By default, `unidecode` optimizes for the use case where most of the strings
+By default, ``unidecode()`` optimizes for the use case where most of the strings
 passed to it are already ASCII-only and no transliteration is necessary (this
 default might change in future versions).
 
 For performance critical applications, two additional functions are exposed:
 
-`unidecode_expect_ascii` is optimized for ASCII-only inputs (approximately 5
-times faster than `unidecode_expect_nonascii` on 10 character strings, more on
-longer strings), but slightly slower for non-ASCII inputs.
+``unidecode_expect_ascii()`` is optimized for ASCII-only inputs (approximately
+5 times faster than ``unidecode_expect_nonascii()`` on 10 character strings,
+more on longer strings), but slightly slower for non-ASCII inputs.
 
-`unidecode_expect_nonascii` takes approximately the same amount of time on
+``unidecode_expect_nonascii()`` takes approximately the same amount of time on
 ASCII and non-ASCII inputs, but is slightly faster for non-ASCII inputs than
-`unidecode_expect_ascii`.
+``unidecode_expect_ascii()``.
 
 Apart from differences in run time, both functions produce identical results.
 For most users of Unidecode, the difference in performance should be
