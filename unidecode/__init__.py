@@ -43,15 +43,14 @@ def unidecode_expect_ascii(string):
     chars are present.
     """
 
+    if version_info[0] >= 3:
+        return string
     _warn_if_not_unicode(string)
     try:
         bytestring = string.encode('ASCII')
     except UnicodeEncodeError:
         return _unidecode(string)
-    if version_info[0] >= 3:
-        return string
-    else:
-        return bytestring
+    return bytestring
 
 def unidecode_expect_nonascii(string):
     """Transliterate an Unicode object into an ASCII string
