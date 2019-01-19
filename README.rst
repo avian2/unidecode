@@ -204,7 +204,7 @@ Copyright 2001, Sean M. Burke <sburke@cpan.org>, all rights reserved.
 
 Python code and later additions:
 
-Copyright 2018, Tomaz Solc <tomaz.solc@tablix.org>
+Copyright 2019, Tomaz Solc <tomaz.solc@tablix.org>
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the Free
