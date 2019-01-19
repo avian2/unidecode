@@ -43,7 +43,7 @@ def main():
         # add a newline to the string if it comes from the
         # command line so that the result is printed nicely
         # on the console.
-        stream += '\n'.encode('ascii')
+        stream += b'\n'
     else:
         if PY3:
             stream = sys.stdin.buffer.read()
