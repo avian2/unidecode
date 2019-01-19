@@ -6,16 +6,9 @@ import subprocess
 import sys
 import tempfile
 
-PY3 = sys.version_info[0] >= 3
 
 here = os.path.dirname(__file__)
 
-if PY3:
-    def _u(x):
-        return x
-else:
-    def _u(x):
-        return x.decode('unicode-escape')
 
 def get_cmd():
     sys_path = os.path.join(here, "..")
@@ -39,7 +32,7 @@ def temp(content):
 
 class TestUnidecodeUtility(unittest.TestCase):
 
-    TEST_UNICODE = _u('\u9769')
+    TEST_UNICODE = u'\u9769'
     TEST_ASCII = 'Ge '
 
     def test_encoding_error(self):

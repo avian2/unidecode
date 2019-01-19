@@ -6,7 +6,8 @@ from setuptools import setup
 
 
 def get_long_description():
-    return open(os.path.join(os.path.dirname(__file__), "README.rst")).read()
+    with open(os.path.join(os.path.dirname(__file__), "README.rst")) as fp:
+        return fp.read()
 
 setup(
     name='Unidecode',
@@ -18,6 +19,7 @@ setup(
     author_email='tomaz.solc@tablix.org',
 
     packages=['unidecode'],
+    python_requires=">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",
 
     test_suite='tests',
 
@@ -35,6 +37,7 @@ setup(
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
         "Topic :: Text Processing",
