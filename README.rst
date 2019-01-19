@@ -92,8 +92,8 @@ return True::
     >>> sys.maxunicode > 0xffff
     True
 
-See PEP 261 for details regarding support for "wide" Unicode characters in
-Python.
+See `PEP 261 <https://www.python.org/dev/peps/pep-0261/>`_ for details
+regarding support for "wide" Unicode characters in Python.
 
 
 Installation
