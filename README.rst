@@ -135,6 +135,14 @@ Unidecode should use a permissive license such as MIT or the BSD license.
     you, please consider using other libraries, such as `text-unidecode
     <https://github.com/kmike/text-unidecode>`_.
 
+Unidecode produces completely wrong results (e.g. "u" with diaeresis transliterating as "A 1/4 ")
+    The strings you are passing to Unidecode have been wrongly decoded
+    somewhere in your program. For example, you might be decoding utf-8 encoded
+    strings as latin1. With a misconfigured terminal, locale and/or a text
+    editor this might not be immediately apparent. Inspect your strings with
+    ``repr()`` and consult the
+    `Unicode HOWTO <https://docs.python.org/3/howto/unicode.html>`_.
+
 I've upgraded Unidecode and now some URLs on my website return 404 Not Found.
     This is an issue with the software that is running your website, not
     Unidecode. Occasionally, new versions of Unidecode library are released
