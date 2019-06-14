@@ -1,3 +1,9 @@
+2019-06-14	unidecode 1.1.0
+	* Add more Latin letter variants in U+1F1xx page.
+	* Make it possible to use the Unidecode command-line utility via
+	  "python -m unidecode" (thanks to Jon Dufresne)
+	* General clean up of code and documentation (thanks to Jon Dufresne)
+
 2018-11-19	unidecode 1.0.23
 	* Improve transliteration of Hebrew letters (thanks to Alon Bar-Lev)
 	* Add transliterations for the phonetic block U+1D00 - U+1D7F
