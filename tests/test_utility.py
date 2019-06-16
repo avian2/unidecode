@@ -5,10 +5,14 @@ import unittest
 import subprocess
 import sys
 import tempfile
+import re
 
 
 here = os.path.dirname(__file__)
 
+# Python 2.7 does not have assertRegex
+if not hasattr(unittest.TestCase, 'assertRegex'):
+    unittest.TestCase.assertRegex = lambda self, text, exp: self.assertTrue(re.search(exp, text))
 
 def get_cmd():
     sys_path = os.path.join(here, "..")
@@ -39,8 +43,8 @@ class TestUnidecodeUtility(unittest.TestCase):
         f = temp(self.TEST_UNICODE.encode('sjis'))
         out, err = run(['-e', 'utf8', f.name])
 
-        expected = 'Unable to decode input: invalid start byte, start: 0, end: 1\n'
-        self.assertEqual(err, expected)
+        # Text after : ... can differ between Python versions
+        self.assertRegex(err, '^Unable to decode input: ')
 
     def test_file_specified_encoding(self):
         f = temp(self.TEST_UNICODE.encode('sjis'))
