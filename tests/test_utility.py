@@ -26,7 +26,7 @@ def run(argv):
 
     out, err = p.communicate()
 
-    return out.decode('ascii'), err.decode('ascii')
+    return out.decode('ascii'), err.decode('ascii'), p.returncode
 
 def temp(content):
     f = tempfile.NamedTemporaryFile()
@@ -41,21 +41,24 @@ class TestUnidecodeUtility(unittest.TestCase):
 
     def test_encoding_error(self):
         f = temp(self.TEST_UNICODE.encode('sjis'))
-        out, err = run(['-e', 'utf8', f.name])
+        out, err, rc = run(['-e', 'utf8', f.name])
 
         # Text after : ... can differ between Python versions
         self.assertRegex(err, '^Unable to decode input: ')
+        self.assertEqual(rc, 1)
 
     def test_file_specified_encoding(self):
         f = temp(self.TEST_UNICODE.encode('sjis'))
 
-        out, err = run(['-e', 'sjis', f.name])
+        out, err, rc = run(['-e', 'sjis', f.name])
         self.assertEqual(out, self.TEST_ASCII)
+        self.assertEqual(rc, 0)
 
     def test_file_default_encoding(self):
         f = temp(self.TEST_UNICODE.encode(locale.getpreferredencoding()))
-        out, err = run([f.name])
+        out, err, rc = run([f.name])
         self.assertEqual(out, self.TEST_ASCII)
+        self.assertEqual(rc, 0)
 
     def test_file_stdin(self):
         cmd = get_cmd()
@@ -65,5 +68,6 @@ class TestUnidecodeUtility(unittest.TestCase):
         self.assertEqual(out.decode('ascii'), self.TEST_ASCII)
 
     def test_commandline(self):
-        out = run(['-e', 'sjis', '-c', self.TEST_UNICODE.encode('sjis')])[0]
+        out, err, rc = run(['-e', 'sjis', '-c', self.TEST_UNICODE.encode('sjis')])
         self.assertEqual(out, self.TEST_ASCII + '\n')
+        self.assertEqual(rc, 0)
