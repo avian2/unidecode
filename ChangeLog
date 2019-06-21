@@ -1,3 +1,6 @@
+2019-06-21	unidecode 1.1.1
+	* Fix tests failing on PyPy 7.1.1
+
 2019-06-14	unidecode 1.1.0
 	* Add more Latin letter variants in U+1F1xx page.
 	* Make it possible to use the Unidecode command-line utility via
