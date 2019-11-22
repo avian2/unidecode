@@ -28,7 +28,7 @@ def _warn_if_not_unicode(string):
                         RuntimeWarning, 2)
 
 
-def unidecode_expect_ascii(string):
+def unidecode_expect_ascii(string, ignore=u''):
     """Transliterate an Unicode object into an ASCII string
 
     >>> unidecode(u"\u5317\u4EB0")
@@ -47,13 +47,13 @@ def unidecode_expect_ascii(string):
     try:
         bytestring = string.encode('ASCII')
     except UnicodeEncodeError:
-        return _unidecode(string)
+        return _unidecode(string, ignore)
     if version_info[0] >= 3:
         return string
     else:
         return bytestring
 
-def unidecode_expect_nonascii(string):
+def unidecode_expect_nonascii(string, ignore=u''):
     """Transliterate an Unicode object into an ASCII string
 
     >>> unidecode(u"\u5317\u4EB0")
@@ -61,15 +61,19 @@ def unidecode_expect_nonascii(string):
     """
 
     _warn_if_not_unicode(string)
-    return _unidecode(string)
+    return _unidecode(string, ignore)
 
 unidecode = unidecode_expect_ascii
 
-def _unidecode(string):
+def _unidecode(string, ignore=u''):
     retval = []
 
     for char in string:
         codepoint = ord(char)
+
+        if char in ignore:
+            retval.append(char)
+            continue
 
         if codepoint < 0x80: # Basic ASCII
             retval.append(str(char))
