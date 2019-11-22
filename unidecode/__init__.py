@@ -21,14 +21,16 @@ Cache = {}
 
 
 def _warn_if_not_unicode(string):
-    if version_info[0] < 3 and not isinstance(string, unicode):
-        warnings.warn(  "Argument %r is not an unicode object. "
+    if version_info[0] > 2:
+        unicode = str
+    if not isinstance(string, unicode) and version_info[0] < 3:
+        warnings.warn(  "Argument %r is not a unicode object. "
                         "Passing an encoded string will likely have "
                         "unexpected results." % (type(string),),
                         RuntimeWarning, 2)
 
 
-def unidecode_expect_ascii(string):
+def unidecode_expect_ascii(string,errors='ignore'):
     """Transliterate an Unicode object into an ASCII string
 
     >>> unidecode(u"\u5317\u4EB0")
@@ -47,13 +49,13 @@ def unidecode_expect_ascii(string):
     try:
         bytestring = string.encode('ASCII')
     except UnicodeEncodeError:
-        return _unidecode(string)
+        return _unidecode(string,errors)
     if version_info[0] >= 3:
         return string
     else:
         return bytestring
 
-def unidecode_expect_nonascii(string):
+def unidecode_expect_nonascii(string,errors='ignore'):
     """Transliterate an Unicode object into an ASCII string
 
     >>> unidecode(u"\u5317\u4EB0")
@@ -61,11 +63,20 @@ def unidecode_expect_nonascii(string):
     """
 
     _warn_if_not_unicode(string)
-    return _unidecode(string)
+    return _unidecode(string,errors=errors)
 
 unidecode = unidecode_expect_ascii
 
-def _unidecode(string):
+def _unidecode(string,errors='ignore'):
+    """
+        Decode the string using the tables set up in the x???.py files in this project.
+
+          errors
+            The error handling scheme to use for encoding errors.
+            The default is 'ignore' meaning that characters are dropped if no replacements are found in the tables.
+            Other possible values are 'strict' an exception is thrown if no value is found,
+            'replace' a ? is substituted if no replacement is found and 'preserve' the existing unicode character is kept.
+        """
     retval = []
 
     for char in string:
@@ -91,13 +102,24 @@ def _unidecode(string):
         except KeyError:
             try:
                 mod = __import__('unidecode.x%03x'%(section), globals(), locals(), ['data'])
-            except ImportError:
-                Cache[section] = None
-                continue   # No match: ignore this character and carry on.
+                Cache[section] = table = mod.data
+            except ImportError as e:
+                Cache[section] = table = None
+                if errors=='strict':
+                    raise e
 
-            Cache[section] = table = mod.data
+        # set return value to the found charace
+        if table and len(table) > position and table[position] != '' :
+            return_char = table[position]
+        elif errors == 'ignore':
+            return_char = ''
+        elif errors == 'strict':
+            raise KeyError
+        elif errors == 'replace':
+            return_char = '?'
+        else: # preserve
+            return_char = char
 
-        if table and len(table) > position:
-            retval.append( table[position] )
+        retval.append(return_char)
 
     return ''.join(retval)
