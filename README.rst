@@ -4,14 +4,18 @@ Unidecode, lossy ASCII transliterations of Unicode text
 It often happens that you have text data in Unicode, but you need to
 represent it in ASCII. For example when integrating with legacy code that
 doesn't support Unicode, or for ease of entry of non-Roman names on a US
-keyboard, or when constructing ASCII machine identifiers from
-human-readable Unicode strings that should still be somewhat intelligible
-(a popular example of this is when making an URL slug from an article
-title).
+keyboard, or when constructing ASCII machine identifiers from human-readable
+Unicode strings that should still be somewhat intelligible. A popular example
+of this is when making an URL slug from an article title.
 
-In most of these examples you could represent Unicode characters as ``???`` or
-``\\15BA\\15A0\\1610``, to mention two extreme cases. But that's nearly useless
-to someone who actually wants to read what the text says.
+**Unidecode is not a replacement for fully supporting Unicode for strings in
+your program. There are a number of caveats that come with its use,
+especially when its output is directly visible to users. Please read the rest
+of this README before using Unidecode in your project.**
+
+In most of examples listed above you could represent Unicode characters as
+``???`` or ``\\15BA\\15A0\\1610``, to mention two extreme cases. But that's
+nearly useless to someone who actually wants to read what the text says.
 
 What Unidecode provides is a middle road: the function ``unidecode()`` takes
 Unicode data and tries to represent it in ASCII characters (i.e., the
@@ -29,11 +33,17 @@ character-by-character mapping. So a good rule of thumb is that the further
 the script you are transliterating is from Latin alphabet, the worse the
 transliteration will be.
 
-Note that this module generally produces better results than simply
-stripping accents from characters (which can be done in Python with
-built-in functions). It is based on hand-tuned character mappings that for
-example also contain ASCII approximations for symbols and non-Latin
-alphabets.
+Generally Unidecode produces better results than simply stripping accents from
+characters (which can be done in Python with built-in functions). It is based
+on hand-tuned character mappings that for example also contain ASCII
+approximations for symbols and non-Latin alphabets.
+
+**Note that some people might find certain transliterations offending.** Most
+common examples include characters that are used in multiple languages. A user
+expects a character to be transliterated in their language but Unidecode uses a
+transliteration for a different language. It's best to not use Unidecode for
+strings that are directly visible to users of your application. See also the
+*Frequently Asked Questions* section for more info on common problems.
 
 This is a Python port of ``Text::Unidecode`` Perl module by Sean M. Burke
 <sburke@cpan.org>.
@@ -122,11 +132,28 @@ German umlauts are transliterated incorrectly
     workaround is to do your own replacements of these characters before
     passing the string to ``unidecode()``.
 
+Japanese Kanji is transliterated as Chinese
+    Same as with Latin letters with accents discussed in the answer above, the
+    Unicode standard encodes letters, not letters in a certain language or
+    their meaning. With Japanese and Chinese this is even more evident because
+    the same letter can have very different transliterations depending on the
+    language it is used in. Since Unidecode does not do language-specific
+    transliteration (see next question), it must decide on one. For certain
+    characters that are used in both Japanese and Chinese the decision was to
+    use Chinese transliterations. If you intend to transliterate Japanese,
+    Chinese or Korean text please consider using other libraries which do
+    language-specific transliteration, such as `Unihandecode
+    <https://github.com/miurahr/unihandecode>`_.
+
 Unidecode should support localization (e.g. a language or country parameter, inspecting system locale, etc.)
     Language-specific transliteration is a complicated problem and beyond the
     scope of this library. Changes related to this will not be accepted. Please
     consider using other libraries which do provide this capability, such as
     `Unihandecode <https://github.com/miurahr/unihandecode>`_.
+
+Unidecode should automatically detect the language of the text being transliterated
+    Language detection is a completely separate problem and beyond the scope of
+    this library.
 
 Unidecode should use a permissive license such as MIT or the BSD license.
     The maintainer of Unidecode believes that providing access to source code
