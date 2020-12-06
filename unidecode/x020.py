@@ -73,7 +73,11 @@ data = (
 '??',    # 0x47
 '?!',    # 0x48
 '!?',    # 0x49
-'7',    # 0x4a
+
+# Tironian note standing for Latin "et". Still used as an ampersand
+# in modern Irish. See https://github.com/avian2/unidecode/issues/57
+'&',    # 0x4a
+
 'PP',    # 0x4b
 '(]',    # 0x4c
 '[)',    # 0x4d
