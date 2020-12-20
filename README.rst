@@ -68,9 +68,9 @@ You can also specify an *errors* argument to ``unidecode()`` that determines
 what Unidecode does with characters that are not present in its transliteration
 tables. The default is ``'ignore'`` meaning that Unidecode will ignore those
 characters (replace them with an empty string). ``'strict'`` will raise a
-`UnidecodeError`. The exception object will contain an *index* attribute that
+``UnidecodeError``. The exception object will contain an *index* attribute that
 can be used to find the offending character. ``'replace'`` will replace them
-with ``'?'`` (or another string, specified in the *replacement_char* argument).
+with ``'?'`` (or another string, specified in the *replace_str* argument).
 ``'preserve'`` will keep the original, non-ASCII character in the string. Note
 that if ``'preserve'`` is used the string returned by ``unidecode()`` will not
 be ASCII-encodable!

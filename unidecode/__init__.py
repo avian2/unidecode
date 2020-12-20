@@ -37,7 +37,7 @@ def _warn_if_not_unicode(string):
                         RuntimeWarning, 2)
 
 
-def unidecode_expect_ascii(string, errors='ignore', replace_char='?'):
+def unidecode_expect_ascii(string, errors='ignore', replace_str='?'):
     """Transliterate an Unicode object into an ASCII string
 
     >>> unidecode(u"\u5317\u4EB0")
@@ -54,7 +54,7 @@ def unidecode_expect_ascii(string, errors='ignore', replace_char='?'):
     errors specifies what to do with characters that have not been
     found in replacement tables. The default is 'ignore' which ignores
     the character. 'strict' raises an UnidecodeError. 'replace'
-    substitutes the character with replace_char (default is '?').
+    substitutes the character with replace_str (default is '?').
     'preserve' keeps the original character.
 
     Note that if 'preserve' is used the returned string might not be
@@ -65,13 +65,13 @@ def unidecode_expect_ascii(string, errors='ignore', replace_char='?'):
     try:
         bytestring = string.encode('ASCII')
     except UnicodeEncodeError:
-        return _unidecode(string, errors, replace_char)
+        return _unidecode(string, errors, replace_str)
     if version_info[0] >= 3:
         return string
     else:
         return bytestring
 
-def unidecode_expect_nonascii(string, errors='ignore', replace_char='?'):
+def unidecode_expect_nonascii(string, errors='ignore', replace_str='?'):
     """Transliterate an Unicode object into an ASCII string
 
     >>> unidecode(u"\u5317\u4EB0")
@@ -81,11 +81,11 @@ def unidecode_expect_nonascii(string, errors='ignore', replace_char='?'):
     """
 
     _warn_if_not_unicode(string)
-    return _unidecode(string, errors, replace_char)
+    return _unidecode(string, errors, replace_str)
 
 unidecode = unidecode_expect_ascii
 
-def _get_repl_char(char):
+def _get_repl_str(char):
     codepoint = ord(char)
 
     if codepoint < 0x80:
@@ -121,11 +121,11 @@ def _get_repl_char(char):
     else:
         return None
 
-def _unidecode(string, errors, replace_char):
+def _unidecode(string, errors, replace_str):
     retval = []
 
     for index, char in enumerate(string):
-        repl = _get_repl_char(char)
+        repl = _get_repl_str(char)
 
         if repl is None:
             if errors == 'ignore':
@@ -134,7 +134,7 @@ def _unidecode(string, errors, replace_char):
                 raise UnidecodeError('no replacement found for character %r '
                         'in position %d' % (char, index), index)
             elif errors == 'replace':
-                repl = replace_char
+                repl = replace_str
             elif errors == 'preserve':
                 repl = char
             else:

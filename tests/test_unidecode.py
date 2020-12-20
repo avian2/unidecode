@@ -514,8 +514,8 @@ class BaseTestUnidecode():
         self.assertEqual('test ? test', o)
 
     @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
-    def test_errors_replace_char(self):
-        o = self.unidecode(u"test \U000f0000 test", errors='replace', replace_char='[?] ')
+    def test_errors_replace_str(self):
+        o = self.unidecode(u"test \U000f0000 test", errors='replace', replace_str='[?] ')
         self.assertEqual('test [?]  test', o)
 
     @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
