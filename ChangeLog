@@ -1,3 +1,7 @@
+2020-12-20	unidecode 1.1.2
+	* Add some missing replacements in the U+23xx page.
+	* Fix U+204A "TIRONIAN SIGN ET" replacement.
+
 2019-06-21	unidecode 1.1.1
 	* Fix tests failing on PyPy 7.1.1
 
