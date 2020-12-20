@@ -68,6 +68,24 @@ class BaseTestUnidecode():
 
         wlog.stop()
 
+
+    def test_ignore(self):
+        wlog = WarningLogger()
+        wlog.start("should be ignored")
+
+        r = self.unidecode(u'æøåÆØÅ', ignore=u'æøå')
+        self.assertEqual(r, u'æøåAEOA')
+
+        if sys.version_info[0] >= 3:
+            self.assertEqual(type(r), str)
+        else:
+            self.assertEqual(type(r), unicode)
+
+        # unicode objects shouldn't raise warnings
+        self.assertEqual(0, len(wlog.log))
+
+        wlog.stop()
+
     def test_bmp(self):
         for n in range(0,0x10000):
             # skip over surrogate pairs, which throw a warning
