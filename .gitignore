@@ -7,3 +7,5 @@ MANIFEST
 *.bak
 tools/NamesList.txt
 Unidecode.egg-info
+.coverage
+htmlcov
