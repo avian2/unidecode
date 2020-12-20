@@ -2,7 +2,7 @@
 # vim:ts=4 sw=4 expandtab softtabstop=4
 import unittest
 import sys
-from unidecode import unidecode, unidecode_expect_ascii, unidecode_expect_nonascii
+from unidecode import unidecode, unidecode_expect_ascii, unidecode_expect_nonascii, UnidecodeError
 import warnings
 
 
@@ -501,6 +501,41 @@ class BaseTestUnidecode():
             'aA20(20)20.20100',
             self.unidecode(u'ⓐⒶ⑳⒇⒛⓴⓾⓿'),
         )
+
+    @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
+    def test_errors_ignore(self):
+        # unidecode doesn't have replacements for private use characters
+        o = self.unidecode(u"test \U000f0000 test", errors='ignore')
+        self.assertEqual('test  test', o)
+
+    @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
+    def test_errors_replace(self):
+        o = self.unidecode(u"test \U000f0000 test", errors='replace')
+        self.assertEqual('test ? test', o)
+
+    @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
+    def test_errors_replace_char(self):
+        o = self.unidecode(u"test \U000f0000 test", errors='replace', replace_char='[?] ')
+        self.assertEqual('test [?]  test', o)
+
+    @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
+    def test_errors_strict(self):
+        with self.assertRaises(UnidecodeError) as e:
+            o = self.unidecode(u"test \U000f0000 test", errors='strict')
+
+        self.assertEqual(5, e.exception.index)
+
+    @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
+    def test_errors_preserve(self):
+        s = u"test \U000f0000 test"
+        o = self.unidecode(s, errors='preserve')
+
+        self.assertEqual(s, o)
+
+    @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
+    def test_errors_invalid(self):
+        with self.assertRaises(UnidecodeError) as e:
+            self.unidecode(u"test \U000f0000 test", errors='invalid')
 
 
 class TestUnidecode(BaseTestUnidecode, unittest.TestCase):
