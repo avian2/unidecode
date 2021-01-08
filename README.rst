@@ -57,11 +57,11 @@ string (Python 3.x) and returns a string (that can be encoded to ASCII bytes in
 Python 3.x)::
 
     >>> from unidecode import unidecode
-    >>> unidecode(u'ko\u017eu\u0161\u010dek')
+    >>> unidecode('ko\u017eu\u0161\u010dek')
     'kozuscek'
-    >>> unidecode(u'30 \U0001d5c4\U0001d5c6/\U0001d5c1')
+    >>> unidecode('30 \U0001d5c4\U0001d5c6/\U0001d5c1')
     '30 km/h'
-    >>> unidecode(u"\u5317\u4EB0")
+    >>> unidecode('\u5317\u4EB0')
     'Bei Jing '
 
 You can also specify an *errors* argument to ``unidecode()`` that determines
