@@ -73,7 +73,14 @@ can be used to find the offending character. ``'replace'`` will replace them
 with ``'?'`` (or another string, specified in the *replace_str* argument).
 ``'preserve'`` will keep the original, non-ASCII character in the string. Note
 that if ``'preserve'`` is used the string returned by ``unidecode()`` will not
-be ASCII-encodable!
+be ASCII-encodable!::
+
+    >>> unidecode('\ue000') # unidecode does not have replacements for Private Use Area characters
+    ''
+    >>> unidecode('\ue000', errors='strict')
+    Traceback (most recent call last):
+    ...
+    unidecode.UnidecodeError: no replacement found for character '\ue000' in position 0
 
 A utility is also included that allows you to transliterate text from the
 command line in several ways. Reading from standard input::
