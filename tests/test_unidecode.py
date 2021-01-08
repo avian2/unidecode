@@ -525,6 +525,11 @@ class BaseTestUnidecode():
 
         self.assertEqual(5, e.exception.index)
 
+        # This checks that the exception is not chained (i.e. you don't get the
+        # "During handling of the above exception, another exception occurred")
+        if sys.version_info[0] >= 3:
+            self.assertIsNone(e.exception.__context__)
+
     @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
     def test_errors_preserve(self):
         s = u"test \U000f0000 test"
@@ -537,6 +542,10 @@ class BaseTestUnidecode():
         with self.assertRaises(UnidecodeError) as e:
             self.unidecode(u"test \U000f0000 test", errors='invalid')
 
+        # This checks that the exception is not chained (i.e. you don't get the
+        # "During handling of the above exception, another exception occurred")
+        if sys.version_info[0] >= 3:
+            self.assertIsNone(e.exception.__context__)
 
 class TestUnidecode(BaseTestUnidecode, unittest.TestCase):
     unidecode = staticmethod(unidecode)

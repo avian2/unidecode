@@ -65,11 +65,14 @@ def unidecode_expect_ascii(string, errors='ignore', replace_str='?'):
     try:
         bytestring = string.encode('ASCII')
     except UnicodeEncodeError:
-        return _unidecode(string, errors, replace_str)
-    if version_info[0] >= 3:
-        return string
+        pass
     else:
-        return bytestring
+        if version_info[0] >= 3:
+            return string
+        else:
+            return bytestring
+
+    return _unidecode(string, errors, replace_str)
 
 def unidecode_expect_nonascii(string, errors='ignore', replace_str='?'):
     """Transliterate an Unicode object into an ASCII string
