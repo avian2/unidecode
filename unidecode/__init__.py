@@ -17,9 +17,9 @@ A standard string object will be returned. If you need bytes, use:
 b'Knosos'
 """
 import warnings
-from typing import Optional
+from typing import Dict, Optional, Sequence
 
-Cache = {}
+Cache = {} # type: Dict[int, Optional[Sequence[Optional[str]]]]
 
 class UnidecodeError(ValueError):
     def __init__(self, message: str, index: Optional[int] = None) -> None:
@@ -78,7 +78,7 @@ def unidecode_expect_nonascii(string: str, errors: str = 'ignore', replace_str: 
 
 unidecode = unidecode_expect_ascii
 
-def _get_repl_str(char):
+def _get_repl_str(char: str) -> Optional[str]:
     codepoint = ord(char)
 
     if codepoint < 0x80:
@@ -114,7 +114,7 @@ def _get_repl_str(char):
     else:
         return None
 
-def _unidecode(string, errors, replace_str):
+def _unidecode(string: str, errors: str, replace_str:str) -> str:
     retval = []
 
     for index, char in enumerate(string):

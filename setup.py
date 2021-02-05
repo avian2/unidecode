@@ -19,7 +19,7 @@ setup(
     author_email='tomaz.solc@tablix.org',
 
     packages=['unidecode'],
-    package_data={'unidecode': ['py.typed', '__init__.pyi']},
+    package_data={'unidecode': ['py.typed']},
     python_requires=">=3.5",
 
     test_suite='tests',
