@@ -18,11 +18,12 @@ b'Knosos'
 """
 import warnings
 from sys import version_info
+from typing import Optional
 
 Cache = {}
 
 class UnidecodeError(ValueError):
-    def __init__(self, message, index=None):
+    def __init__(self, message: str, index: Optional[int] = None) -> None:
         """Raised for Unidecode-related errors.
 
         The index attribute contains the index of the character that caused
@@ -32,7 +33,7 @@ class UnidecodeError(ValueError):
         self.index = index
 
 
-def unidecode_expect_ascii(string, errors='ignore', replace_str='?'):
+def unidecode_expect_ascii(string: str, errors: str = 'ignore', replace_str: str = '?') -> str:
     """Transliterate an Unicode object into an ASCII string
 
     >>> unidecode("\u5317\u4EB0")
@@ -65,7 +66,7 @@ def unidecode_expect_ascii(string, errors='ignore', replace_str='?'):
 
     return _unidecode(string, errors, replace_str)
 
-def unidecode_expect_nonascii(string, errors='ignore', replace_str='?'):
+def unidecode_expect_nonascii(string: str, errors: str = 'ignore', replace_str: str = '?') -> str:
     """Transliterate an Unicode object into an ASCII string
 
     >>> unidecode("\u5317\u4EB0")
