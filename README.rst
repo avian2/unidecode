@@ -52,9 +52,9 @@ This is a Python port of ``Text::Unidecode`` Perl module by Sean M. Burke
 Module content
 --------------
 
-The module exports a function that takes a string object, possibly containing
-non-ASCII characters, and returns a string that can be safely encoded to
-ASCII::
+This library contains a function that takes a string object, possibly
+containing non-ASCII characters, and returns a string that can be safely
+encoded to ASCII::
 
     >>> from unidecode import unidecode
     >>> unidecode('ko\u017eu\u0161\u010dek')
@@ -187,6 +187,14 @@ Unidecode produces completely wrong results (e.g. "u" with diaeresis translitera
     editor this might not be immediately apparent. Inspect your strings with
     ``repr()`` and consult the
     `Unicode HOWTO <https://docs.python.org/3/howto/unicode.html>`_.
+
+Why does Unidecode not replace \u and \U backslash escapes in my strings?
+    Unidecode knows nothing about escape sequences. Interpreting these sequences
+    and replacing them with actual Unicode characters in string literals is the
+    task of the Python interpreter. If you are asking this question you are
+    very likely misunderstanding the purpose of this library. Consult the
+    `Unicode HOWTO <https://docs.python.org/3/howto/unicode.html>`_ and possibly
+    the ``unicode_escape`` encoding in the standard library.
 
 I've upgraded Unidecode and now some URLs on my website return 404 Not Found.
     This is an issue with the software that is running your website, not
