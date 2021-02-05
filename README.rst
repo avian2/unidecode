@@ -188,7 +188,7 @@ Unidecode produces completely wrong results (e.g. "u" with diaeresis translitera
     ``repr()`` and consult the
     `Unicode HOWTO <https://docs.python.org/3/howto/unicode.html>`_.
 
-Why does Unidecode not replace \u and \U backslash escapes in my strings?
+Why does Unidecode not replace \\u and \\U backslash escapes in my strings?
     Unidecode knows nothing about escape sequences. Interpreting these sequences
     and replacing them with actual Unicode characters in string literals is the
     task of the Python interpreter. If you are asking this question you are
