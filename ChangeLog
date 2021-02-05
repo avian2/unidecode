@@ -1,3 +1,15 @@
+2021-02-05	unidecode 1.2.0
+	* Add 'errors' argument that specifies how characters with unknown
+	  replacements are handled. Default is 'ignore' to replicate the
+	  behavior of older versions.
+	* Many characters that were previously replaced with '[?]' are now
+	  correctly marked as unknown and will behave as specified in the
+	  new errors='...' argument.
+	* Added some missing ligatures and quotation marks in U+1F6xx and
+	  U+27xx ranges.
+	* Add PEP 561-style type information (thanks to Pascal Corpet)
+	* Support for Python 2 and 3.5 to be removed in next release.
+
 2020-12-20	unidecode 1.1.2
 	* Add some missing replacements in the U+23xx page.
 	* Fix U+204A "TIRONIAN SIGN ET" replacement.
