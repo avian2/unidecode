@@ -29,27 +29,7 @@ class WarningLogger:
     def clear(self):
         self.log = []
 
-if sys.version_info[0] >= 3:
-    _chr = chr
-else:
-    _chr = unichr
-
 class BaseTestUnidecode():
-    @unittest.skipIf(sys.version_info[0] >= 3, "not python 2")
-    def test_ascii_warning(self):
-        wlog = WarningLogger()
-        wlog.start("not an unicode object")
-
-        for n in range(0,128):
-            t = chr(n)
-
-            r = self.unidecode(t)
-            self.assertEqual(r, t)
-            self.assertEqual(type(r), str)
-
-        # Passing string objects to unidecode should raise a warning
-        self.assertEqual(128, len(wlog.log))
-        wlog.stop()
 
     def test_ascii(self):
 
@@ -57,7 +37,7 @@ class BaseTestUnidecode():
         wlog.start("not an unicode object")
 
         for n in range(0,128):
-            t = _chr(n)
+            t = chr(n)
 
             r = self.unidecode(t)
             self.assertEqual(r, t)
@@ -75,7 +55,7 @@ class BaseTestUnidecode():
                 continue
 
             # Just check that it doesn't throw an exception
-            t = _chr(n)
+            t = chr(n)
             self.unidecode(t)
 
     def test_surrogates(self):
@@ -83,7 +63,7 @@ class BaseTestUnidecode():
         wlog.start("Surrogate character")
 
         for n in range(0xd800, 0xe000):
-            t = _chr(n)
+            t = chr(n)
             s = self.unidecode(t)
 
             # Check that surrogate characters translate to nothing.
@@ -94,7 +74,7 @@ class BaseTestUnidecode():
 
     def test_space(self):
         for n in range(0x80, 0x10000):
-            t = _chr(n)
+            t = chr(n)
             if t.isspace():
                 s = self.unidecode(t)
                 self.assertTrue((s == '') or s.isspace(),
@@ -105,19 +85,16 @@ class BaseTestUnidecode():
     def test_surrogate_pairs(self):
         # same character, written as a non-BMP character and a
         # surrogate pair
-        s = u'\U0001d4e3'
+        s = '\U0001d4e3'
 
         # Note: this needs to be constructed at run-time, otherwise
         # a "wide" Python seems to optimize it automatically into a
         # single character.
-        s_sp_1 = u'\ud835'
-        s_sp_2 = u'\udce3'
+        s_sp_1 = '\ud835'
+        s_sp_2 = '\udce3'
         s_sp = s_sp_1 + s_sp_2
 
-        if sys.version_info < (3,4):
-            self.assertEqual(s.encode('utf16'), s_sp.encode('utf16'))
-        else:
-            self.assertEqual(s.encode('utf16'), s_sp.encode('utf16', errors='surrogatepass'))
+        self.assertEqual(s.encode('utf16'), s_sp.encode('utf16', errors='surrogatepass'))
 
         wlog = WarningLogger()
         wlog.start("Surrogate character")
@@ -136,7 +113,7 @@ class BaseTestUnidecode():
         # 1 sequence of a-z
         for n in range(0, 26):
             a = chr(ord('a') + n)
-            b = self.unidecode(_chr(0x24d0 + n))
+            b = self.unidecode(chr(0x24d0 + n))
 
             self.assertEqual(b, a)
 
@@ -151,7 +128,7 @@ class BaseTestUnidecode():
                 a = chr(ord('A') + n % 26)
             else:
                 a = chr(ord('a') + n % 26)
-            b = self.unidecode(_chr(n))
+            b = self.unidecode(chr(n))
 
             if not b:
                 empty += 1
@@ -165,56 +142,56 @@ class BaseTestUnidecode():
         # 5 consecutive sequences of 0-9
         for n in range(0x1d7ce, 0x1d800):
             a = chr(ord('0') + (n-0x1d7ce) % 10)
-            b = self.unidecode(_chr(n))
+            b = self.unidecode(chr(n))
 
             self.assertEqual(b, a)
 
     def test_specific(self):
 
         TESTS = [
-                (u'Hello, World!',
+                ('Hello, World!',
                 "Hello, World!"),
 
-                (u'\'"\r\n',
+                ('\'"\r\n',
                  "'\"\r\n"),
 
-                (u'ČŽŠčžš',
+                ('ČŽŠčžš',
                  "CZSczs"),
 
-                (u'ア',
+                ('ア',
                  "a"),
 
-                (u'α',
+                ('α',
                 "a"),
 
-                (u'а',
+                ('а',
                 "a"),
 
-                (u'ch\u00e2teau',
+                ('ch\u00e2teau',
                 "chateau"),
 
-                (u'vi\u00f1edos',
+                ('vi\u00f1edos',
                 "vinedos"),
 
-                (u'\u5317\u4EB0',
+                ('\u5317\u4EB0',
                 "Bei Jing "),
 
-                (u'Efﬁcient',
+                ('Efﬁcient',
                 "Efficient"),
 
                 # https://github.com/iki/unidecode/commit/4a1d4e0a7b5a11796dc701099556876e7a520065
-                (u'příliš žluťoučký kůň pěl ďábelské ódy',
+                ('příliš žluťoučký kůň pěl ďábelské ódy',
                 'prilis zlutoucky kun pel dabelske ody'),
 
-                (u'PŘÍLIŠ ŽLUŤOUČKÝ KŮŇ PĚL ĎÁBELSKÉ ÓDY',
+                ('PŘÍLIŠ ŽLUŤOUČKÝ KŮŇ PĚL ĎÁBELSKÉ ÓDY',
                 'PRILIS ZLUTOUCKY KUN PEL DABELSKE ODY'),
 
                 # Table that doesn't exist
-                (u'\ua500',
+                ('\ua500',
                 ''),
 
                 # Table that has less than 256 entries
-                (u'\u1eff',
+                ('\u1eff',
                 ''),
             ]
 
@@ -228,14 +205,14 @@ class BaseTestUnidecode():
 
         TESTS = [
                 # Non-BMP character
-                (u'\U0001d5a0',
+                ('\U0001d5a0',
                 'A'),
 
                 # Mathematical
-                (u'\U0001d5c4\U0001d5c6/\U0001d5c1',
+                ('\U0001d5c4\U0001d5c6/\U0001d5c1',
                 'km/h'),
 
-                (u'\u2124\U0001d552\U0001d55c\U0001d552\U0001d55b \U0001d526\U0001d52a\U0001d51e \U0001d4e4\U0001d4f7\U0001d4f2\U0001d4ec\U0001d4f8\U0001d4ed\U0001d4ee \U0001d4c8\U0001d4c5\u212f\U0001d4b8\U0001d4be\U0001d4bb\U0001d4be\U0001d4c0\U0001d4b6\U0001d4b8\U0001d4be\U0001d4bf\u212f \U0001d59f\U0001d586 \U0001d631\U0001d62a\U0001d634\U0001d622\U0001d637\U0001d626?!',
+                ('\u2124\U0001d552\U0001d55c\U0001d552\U0001d55b \U0001d526\U0001d52a\U0001d51e \U0001d4e4\U0001d4f7\U0001d4f2\U0001d4ec\U0001d4f8\U0001d4ed\U0001d4ee \U0001d4c8\U0001d4c5\u212f\U0001d4b8\U0001d4be\U0001d4bb\U0001d4be\U0001d4c0\U0001d4b6\U0001d4b8\U0001d4be\U0001d4bf\u212f \U0001d59f\U0001d586 \U0001d631\U0001d62a\U0001d634\U0001d622\U0001d637\U0001d626?!',
                 'Zakaj ima Unicode specifikacije za pisave?!'),
             ]
 
@@ -444,10 +421,7 @@ class BaseTestUnidecode():
         }
 
         for utf8_input, correct_output in wp_remove_accents.items():
-            if sys.version_info[0] >= 3:
-                inp = bytes(utf8_input).decode('utf8')
-            else:
-                inp = ''.join(map(chr, utf8_input)).decode('utf8')
+            inp = bytes(utf8_input).decode('utf8')
 
             output = self.unidecode(inp)
 
@@ -458,17 +432,17 @@ class BaseTestUnidecode():
         # Examples from http://www.panix.com/~eli/unicode/convert.cgi
         lower = [
             # Fullwidth
-            u'\uff54\uff48\uff45 \uff51\uff55\uff49\uff43\uff4b \uff42\uff52\uff4f\uff57\uff4e \uff46\uff4f\uff58 \uff4a\uff55\uff4d\uff50\uff53 \uff4f\uff56\uff45\uff52 \uff54\uff48\uff45 \uff4c\uff41\uff5a\uff59 \uff44\uff4f\uff47 \uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18\uff19\uff10',
+            '\uff54\uff48\uff45 \uff51\uff55\uff49\uff43\uff4b \uff42\uff52\uff4f\uff57\uff4e \uff46\uff4f\uff58 \uff4a\uff55\uff4d\uff50\uff53 \uff4f\uff56\uff45\uff52 \uff54\uff48\uff45 \uff4c\uff41\uff5a\uff59 \uff44\uff4f\uff47 \uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18\uff19\uff10',
             # Double-struck
-            u'\U0001d565\U0001d559\U0001d556 \U0001d562\U0001d566\U0001d55a\U0001d554\U0001d55c \U0001d553\U0001d563\U0001d560\U0001d568\U0001d55f \U0001d557\U0001d560\U0001d569 \U0001d55b\U0001d566\U0001d55e\U0001d561\U0001d564 \U0001d560\U0001d567\U0001d556\U0001d563 \U0001d565\U0001d559\U0001d556 \U0001d55d\U0001d552\U0001d56b\U0001d56a \U0001d555\U0001d560\U0001d558 \U0001d7d9\U0001d7da\U0001d7db\U0001d7dc\U0001d7dd\U0001d7de\U0001d7df\U0001d7e0\U0001d7e1\U0001d7d8',
+            '\U0001d565\U0001d559\U0001d556 \U0001d562\U0001d566\U0001d55a\U0001d554\U0001d55c \U0001d553\U0001d563\U0001d560\U0001d568\U0001d55f \U0001d557\U0001d560\U0001d569 \U0001d55b\U0001d566\U0001d55e\U0001d561\U0001d564 \U0001d560\U0001d567\U0001d556\U0001d563 \U0001d565\U0001d559\U0001d556 \U0001d55d\U0001d552\U0001d56b\U0001d56a \U0001d555\U0001d560\U0001d558 \U0001d7d9\U0001d7da\U0001d7db\U0001d7dc\U0001d7dd\U0001d7de\U0001d7df\U0001d7e0\U0001d7e1\U0001d7d8',
             # Bold
-            u'\U0001d42d\U0001d421\U0001d41e \U0001d42a\U0001d42e\U0001d422\U0001d41c\U0001d424 \U0001d41b\U0001d42b\U0001d428\U0001d430\U0001d427 \U0001d41f\U0001d428\U0001d431 \U0001d423\U0001d42e\U0001d426\U0001d429\U0001d42c \U0001d428\U0001d42f\U0001d41e\U0001d42b \U0001d42d\U0001d421\U0001d41e \U0001d425\U0001d41a\U0001d433\U0001d432 \U0001d41d\U0001d428\U0001d420 \U0001d7cf\U0001d7d0\U0001d7d1\U0001d7d2\U0001d7d3\U0001d7d4\U0001d7d5\U0001d7d6\U0001d7d7\U0001d7ce',
+            '\U0001d42d\U0001d421\U0001d41e \U0001d42a\U0001d42e\U0001d422\U0001d41c\U0001d424 \U0001d41b\U0001d42b\U0001d428\U0001d430\U0001d427 \U0001d41f\U0001d428\U0001d431 \U0001d423\U0001d42e\U0001d426\U0001d429\U0001d42c \U0001d428\U0001d42f\U0001d41e\U0001d42b \U0001d42d\U0001d421\U0001d41e \U0001d425\U0001d41a\U0001d433\U0001d432 \U0001d41d\U0001d428\U0001d420 \U0001d7cf\U0001d7d0\U0001d7d1\U0001d7d2\U0001d7d3\U0001d7d4\U0001d7d5\U0001d7d6\U0001d7d7\U0001d7ce',
             # Bold italic
-            u'\U0001d495\U0001d489\U0001d486 \U0001d492\U0001d496\U0001d48a\U0001d484\U0001d48c \U0001d483\U0001d493\U0001d490\U0001d498\U0001d48f \U0001d487\U0001d490\U0001d499 \U0001d48b\U0001d496\U0001d48e\U0001d491\U0001d494 \U0001d490\U0001d497\U0001d486\U0001d493 \U0001d495\U0001d489\U0001d486 \U0001d48d\U0001d482\U0001d49b\U0001d49a \U0001d485\U0001d490\U0001d488 1234567890',
+            '\U0001d495\U0001d489\U0001d486 \U0001d492\U0001d496\U0001d48a\U0001d484\U0001d48c \U0001d483\U0001d493\U0001d490\U0001d498\U0001d48f \U0001d487\U0001d490\U0001d499 \U0001d48b\U0001d496\U0001d48e\U0001d491\U0001d494 \U0001d490\U0001d497\U0001d486\U0001d493 \U0001d495\U0001d489\U0001d486 \U0001d48d\U0001d482\U0001d49b\U0001d49a \U0001d485\U0001d490\U0001d488 1234567890',
             # Bold script
-            u'\U0001d4fd\U0001d4f1\U0001d4ee \U0001d4fa\U0001d4fe\U0001d4f2\U0001d4ec\U0001d4f4 \U0001d4eb\U0001d4fb\U0001d4f8\U0001d500\U0001d4f7 \U0001d4ef\U0001d4f8\U0001d501 \U0001d4f3\U0001d4fe\U0001d4f6\U0001d4f9\U0001d4fc \U0001d4f8\U0001d4ff\U0001d4ee\U0001d4fb \U0001d4fd\U0001d4f1\U0001d4ee \U0001d4f5\U0001d4ea\U0001d503\U0001d502 \U0001d4ed\U0001d4f8\U0001d4f0 1234567890',
+            '\U0001d4fd\U0001d4f1\U0001d4ee \U0001d4fa\U0001d4fe\U0001d4f2\U0001d4ec\U0001d4f4 \U0001d4eb\U0001d4fb\U0001d4f8\U0001d500\U0001d4f7 \U0001d4ef\U0001d4f8\U0001d501 \U0001d4f3\U0001d4fe\U0001d4f6\U0001d4f9\U0001d4fc \U0001d4f8\U0001d4ff\U0001d4ee\U0001d4fb \U0001d4fd\U0001d4f1\U0001d4ee \U0001d4f5\U0001d4ea\U0001d503\U0001d502 \U0001d4ed\U0001d4f8\U0001d4f0 1234567890',
             # Fraktur
-            u'\U0001d599\U0001d58d\U0001d58a \U0001d596\U0001d59a\U0001d58e\U0001d588\U0001d590 \U0001d587\U0001d597\U0001d594\U0001d59c\U0001d593 \U0001d58b\U0001d594\U0001d59d \U0001d58f\U0001d59a\U0001d592\U0001d595\U0001d598 \U0001d594\U0001d59b\U0001d58a\U0001d597 \U0001d599\U0001d58d\U0001d58a \U0001d591\U0001d586\U0001d59f\U0001d59e \U0001d589\U0001d594\U0001d58c 1234567890',
+            '\U0001d599\U0001d58d\U0001d58a \U0001d596\U0001d59a\U0001d58e\U0001d588\U0001d590 \U0001d587\U0001d597\U0001d594\U0001d59c\U0001d593 \U0001d58b\U0001d594\U0001d59d \U0001d58f\U0001d59a\U0001d592\U0001d595\U0001d598 \U0001d594\U0001d59b\U0001d58a\U0001d597 \U0001d599\U0001d58d\U0001d58a \U0001d591\U0001d586\U0001d59f\U0001d59e \U0001d589\U0001d594\U0001d58c 1234567890',
         ]
 
         for s in lower:
@@ -478,17 +452,17 @@ class BaseTestUnidecode():
 
         upper = [
             # Fullwidth
-            u'\uff34\uff28\uff25 \uff31\uff35\uff29\uff23\uff2b \uff22\uff32\uff2f\uff37\uff2e \uff26\uff2f\uff38 \uff2a\uff35\uff2d\uff30\uff33 \uff2f\uff36\uff25\uff32 \uff34\uff28\uff25 \uff2c\uff21\uff3a\uff39 \uff24\uff2f\uff27 \uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18\uff19\uff10',
+            '\uff34\uff28\uff25 \uff31\uff35\uff29\uff23\uff2b \uff22\uff32\uff2f\uff37\uff2e \uff26\uff2f\uff38 \uff2a\uff35\uff2d\uff30\uff33 \uff2f\uff36\uff25\uff32 \uff34\uff28\uff25 \uff2c\uff21\uff3a\uff39 \uff24\uff2f\uff27 \uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18\uff19\uff10',
             # Double-struck
-            u'\U0001d54b\u210d\U0001d53c \u211a\U0001d54c\U0001d540\u2102\U0001d542 \U0001d539\u211d\U0001d546\U0001d54e\u2115 \U0001d53d\U0001d546\U0001d54f \U0001d541\U0001d54c\U0001d544\u2119\U0001d54a \U0001d546\U0001d54d\U0001d53c\u211d \U0001d54b\u210d\U0001d53c \U0001d543\U0001d538\u2124\U0001d550 \U0001d53b\U0001d546\U0001d53e \U0001d7d9\U0001d7da\U0001d7db\U0001d7dc\U0001d7dd\U0001d7de\U0001d7df\U0001d7e0\U0001d7e1\U0001d7d8',
+            '\U0001d54b\u210d\U0001d53c \u211a\U0001d54c\U0001d540\u2102\U0001d542 \U0001d539\u211d\U0001d546\U0001d54e\u2115 \U0001d53d\U0001d546\U0001d54f \U0001d541\U0001d54c\U0001d544\u2119\U0001d54a \U0001d546\U0001d54d\U0001d53c\u211d \U0001d54b\u210d\U0001d53c \U0001d543\U0001d538\u2124\U0001d550 \U0001d53b\U0001d546\U0001d53e \U0001d7d9\U0001d7da\U0001d7db\U0001d7dc\U0001d7dd\U0001d7de\U0001d7df\U0001d7e0\U0001d7e1\U0001d7d8',
             # Bold
-            u'\U0001d413\U0001d407\U0001d404 \U0001d410\U0001d414\U0001d408\U0001d402\U0001d40a \U0001d401\U0001d411\U0001d40e\U0001d416\U0001d40d \U0001d405\U0001d40e\U0001d417 \U0001d409\U0001d414\U0001d40c\U0001d40f\U0001d412 \U0001d40e\U0001d415\U0001d404\U0001d411 \U0001d413\U0001d407\U0001d404 \U0001d40b\U0001d400\U0001d419\U0001d418 \U0001d403\U0001d40e\U0001d406 \U0001d7cf\U0001d7d0\U0001d7d1\U0001d7d2\U0001d7d3\U0001d7d4\U0001d7d5\U0001d7d6\U0001d7d7\U0001d7ce',
+            '\U0001d413\U0001d407\U0001d404 \U0001d410\U0001d414\U0001d408\U0001d402\U0001d40a \U0001d401\U0001d411\U0001d40e\U0001d416\U0001d40d \U0001d405\U0001d40e\U0001d417 \U0001d409\U0001d414\U0001d40c\U0001d40f\U0001d412 \U0001d40e\U0001d415\U0001d404\U0001d411 \U0001d413\U0001d407\U0001d404 \U0001d40b\U0001d400\U0001d419\U0001d418 \U0001d403\U0001d40e\U0001d406 \U0001d7cf\U0001d7d0\U0001d7d1\U0001d7d2\U0001d7d3\U0001d7d4\U0001d7d5\U0001d7d6\U0001d7d7\U0001d7ce',
             # Bold italic
-            u'\U0001d47b\U0001d46f\U0001d46c \U0001d478\U0001d47c\U0001d470\U0001d46a\U0001d472 \U0001d469\U0001d479\U0001d476\U0001d47e\U0001d475 \U0001d46d\U0001d476\U0001d47f \U0001d471\U0001d47c\U0001d474\U0001d477\U0001d47a \U0001d476\U0001d47d\U0001d46c\U0001d479 \U0001d47b\U0001d46f\U0001d46c \U0001d473\U0001d468\U0001d481\U0001d480 \U0001d46b\U0001d476\U0001d46e 1234567890',
+            '\U0001d47b\U0001d46f\U0001d46c \U0001d478\U0001d47c\U0001d470\U0001d46a\U0001d472 \U0001d469\U0001d479\U0001d476\U0001d47e\U0001d475 \U0001d46d\U0001d476\U0001d47f \U0001d471\U0001d47c\U0001d474\U0001d477\U0001d47a \U0001d476\U0001d47d\U0001d46c\U0001d479 \U0001d47b\U0001d46f\U0001d46c \U0001d473\U0001d468\U0001d481\U0001d480 \U0001d46b\U0001d476\U0001d46e 1234567890',
             # Bold script
-            u'\U0001d4e3\U0001d4d7\U0001d4d4 \U0001d4e0\U0001d4e4\U0001d4d8\U0001d4d2\U0001d4da \U0001d4d1\U0001d4e1\U0001d4de\U0001d4e6\U0001d4dd \U0001d4d5\U0001d4de\U0001d4e7 \U0001d4d9\U0001d4e4\U0001d4dc\U0001d4df\U0001d4e2 \U0001d4de\U0001d4e5\U0001d4d4\U0001d4e1 \U0001d4e3\U0001d4d7\U0001d4d4 \U0001d4db\U0001d4d0\U0001d4e9\U0001d4e8 \U0001d4d3\U0001d4de\U0001d4d6 1234567890',
+            '\U0001d4e3\U0001d4d7\U0001d4d4 \U0001d4e0\U0001d4e4\U0001d4d8\U0001d4d2\U0001d4da \U0001d4d1\U0001d4e1\U0001d4de\U0001d4e6\U0001d4dd \U0001d4d5\U0001d4de\U0001d4e7 \U0001d4d9\U0001d4e4\U0001d4dc\U0001d4df\U0001d4e2 \U0001d4de\U0001d4e5\U0001d4d4\U0001d4e1 \U0001d4e3\U0001d4d7\U0001d4d4 \U0001d4db\U0001d4d0\U0001d4e9\U0001d4e8 \U0001d4d3\U0001d4de\U0001d4d6 1234567890',
             # Fraktur
-            u'\U0001d57f\U0001d573\U0001d570 \U0001d57c\U0001d580\U0001d574\U0001d56e\U0001d576 \U0001d56d\U0001d57d\U0001d57a\U0001d582\U0001d579 \U0001d571\U0001d57a\U0001d583 \U0001d575\U0001d580\U0001d578\U0001d57b\U0001d57e \U0001d57a\U0001d581\U0001d570\U0001d57d \U0001d57f\U0001d573\U0001d570 \U0001d577\U0001d56c\U0001d585\U0001d584 \U0001d56f\U0001d57a\U0001d572 1234567890',
+            '\U0001d57f\U0001d573\U0001d570 \U0001d57c\U0001d580\U0001d574\U0001d56e\U0001d576 \U0001d56d\U0001d57d\U0001d57a\U0001d582\U0001d579 \U0001d571\U0001d57a\U0001d583 \U0001d575\U0001d580\U0001d578\U0001d57b\U0001d57e \U0001d57a\U0001d581\U0001d570\U0001d57d \U0001d57f\U0001d573\U0001d570 \U0001d577\U0001d56c\U0001d585\U0001d584 \U0001d56f\U0001d57a\U0001d572 1234567890',
         ]
 
         for s in upper:
@@ -499,40 +473,39 @@ class BaseTestUnidecode():
     def test_enclosed_alphanumerics(self):
         self.assertEqual(
             'aA20(20)20.20100',
-            self.unidecode(u'ⓐⒶ⑳⒇⒛⓴⓾⓿'),
+            self.unidecode('ⓐⒶ⑳⒇⒛⓴⓾⓿'),
         )
 
     @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
     def test_errors_ignore(self):
         # unidecode doesn't have replacements for private use characters
-        o = self.unidecode(u"test \U000f0000 test", errors='ignore')
+        o = self.unidecode("test \U000f0000 test", errors='ignore')
         self.assertEqual('test  test', o)
 
     @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
     def test_errors_replace(self):
-        o = self.unidecode(u"test \U000f0000 test", errors='replace')
+        o = self.unidecode("test \U000f0000 test", errors='replace')
         self.assertEqual('test ? test', o)
 
     @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
     def test_errors_replace_str(self):
-        o = self.unidecode(u"test \U000f0000 test", errors='replace', replace_str='[?] ')
+        o = self.unidecode("test \U000f0000 test", errors='replace', replace_str='[?] ')
         self.assertEqual('test [?]  test', o)
 
     @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
     def test_errors_strict(self):
         with self.assertRaises(UnidecodeError) as e:
-            o = self.unidecode(u"test \U000f0000 test", errors='strict')
+            o = self.unidecode("test \U000f0000 test", errors='strict')
 
         self.assertEqual(5, e.exception.index)
 
         # This checks that the exception is not chained (i.e. you don't get the
         # "During handling of the above exception, another exception occurred")
-        if sys.version_info[0] >= 3:
-            self.assertIsNone(e.exception.__context__)
+        self.assertIsNone(e.exception.__context__)
 
     @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
     def test_errors_preserve(self):
-        s = u"test \U000f0000 test"
+        s = "test \U000f0000 test"
         o = self.unidecode(s, errors='preserve')
 
         self.assertEqual(s, o)
@@ -540,12 +513,11 @@ class BaseTestUnidecode():
     @unittest.skipIf(sys.maxunicode < 0x10000, "narrow build")
     def test_errors_invalid(self):
         with self.assertRaises(UnidecodeError) as e:
-            self.unidecode(u"test \U000f0000 test", errors='invalid')
+            self.unidecode("test \U000f0000 test", errors='invalid')
 
         # This checks that the exception is not chained (i.e. you don't get the
         # "During handling of the above exception, another exception occurred")
-        if sys.version_info[0] >= 3:
-            self.assertIsNone(e.exception.__context__)
+        self.assertIsNone(e.exception.__context__)
 
 class TestUnidecode(BaseTestUnidecode, unittest.TestCase):
     unidecode = staticmethod(unidecode)

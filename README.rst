@@ -52,9 +52,9 @@ This is a Python port of ``Text::Unidecode`` Perl module by Sean M. Burke
 Module content
 --------------
 
-The module exports a function that takes an Unicode object (Python 2.x) or
-string (Python 3.x) and returns a string (that can be encoded to ASCII bytes in
-Python 3.x)::
+The module exports a function that takes a string object, possibly containing
+non-ASCII characters, and returns a string that can be safely encoded to
+ASCII::
 
     >>> from unidecode import unidecode
     >>> unidecode('ko\u017eu\u0161\u010dek')
@@ -105,10 +105,7 @@ a full list of available options.
 Requirements
 ------------
 
-Nothing except Python itself. Current release of Unidecode supports Python 2.7
-and 3.4 or later.
-
-**Support for versions earlier than 3.5 will be dropped in the next release.**
+Nothing except Python itself. Unidecode supports Python 3.5 or later.
 
 You need a Python build with "wide" Unicode characters (also called "UCS-4
 build") in order for Unidecode to work correctly with characters outside of
