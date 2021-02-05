@@ -10,10 +10,6 @@ import re
 
 here = os.path.dirname(__file__)
 
-# Python 2.7 does not have assertRegex
-if not hasattr(unittest.TestCase, 'assertRegex'):
-    unittest.TestCase.assertRegex = lambda self, text, exp: self.assertTrue(re.search(exp, text))
-
 def get_cmd():
     sys_path = os.path.join(here, "..")
 

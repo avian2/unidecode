@@ -17,7 +17,6 @@ A standard string object will be returned. If you need bytes, use:
 b'Knosos'
 """
 import warnings
-from sys import version_info
 from typing import Optional
 
 Cache = {}

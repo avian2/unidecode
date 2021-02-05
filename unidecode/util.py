@@ -1,13 +1,10 @@
 # vim:ts=4 sw=4 expandtab softtabstop=4
-from __future__ import print_function
 import argparse
 import locale
 import os
 import sys
 
 from unidecode import unidecode
-
-PY3 = sys.version_info[0] >= 3
 
 def fatal(msg):
     sys.stderr.write(msg + "\n")
@@ -36,19 +33,13 @@ def main():
             with open(args.path, 'rb') as f:
                 stream = f.read()
     elif args.text:
-        if PY3:
-            stream = os.fsencode(args.text)
-        else:
-            stream = args.text
+        stream = os.fsencode(args.text)
         # add a newline to the string if it comes from the
         # command line so that the result is printed nicely
         # on the console.
         stream += b'\n'
     else:
-        if PY3:
-            stream = sys.stdin.buffer.read()
-        else:
-            stream = sys.stdin.read()
+        stream = sys.stdin.buffer.read()
 
     try:
         stream = stream.decode(encoding)
