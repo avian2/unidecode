@@ -6,7 +6,7 @@ from setuptools import setup
 
 
 def get_long_description():
-    with open(os.path.join(os.path.dirname(__file__), "README.rst")) as fp:
+    with open(os.path.join(os.path.dirname(__file__), "README.rst"), encoding='utf-8') as fp:
         return fp.read()
 
 setup(

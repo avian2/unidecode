@@ -57,7 +57,7 @@ containing non-ASCII characters, and returns a string that can be safely
 encoded to ASCII::
 
     >>> from unidecode import unidecode
-    >>> unidecode('ko\u017eu\u0161\u010dek')
+    >>> unidecode('kožušček')
     'kozuscek'
     >>> unidecode('30 \U0001d5c4\U0001d5c6/\U0001d5c1')
     '30 km/h'
@@ -265,7 +265,7 @@ Copyright 2001, Sean M. Burke <sburke@cpan.org>, all rights reserved.
 
 Python code and later additions:
 
-Copyright 2021, Tomaz Solc <tomaz.solc@tablix.org>
+Copyright 2021, Tomaž Šolc <tomaz.solc@tablix.org>
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the Free
