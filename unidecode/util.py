@@ -1,5 +1,6 @@
 # vim:ts=4 sw=4 expandtab softtabstop=4
 import argparse
+import io
 import locale
 import os
 import sys
@@ -30,20 +31,21 @@ def main():
         if args.text:
             fatal("Can't use both FILE and -c option")
         else:
-            with open(args.path, 'rb') as f:
-                stream = f.read()
+            stream = open(args.path, 'rb')
     elif args.text:
-        stream = os.fsencode(args.text)
+        text = os.fsencode(args.text)
         # add a newline to the string if it comes from the
         # command line so that the result is printed nicely
         # on the console.
-        stream += b'\n'
+        stream = io.BytesIO(text + b'\n')
     else:
-        stream = sys.stdin.buffer.read()
+        stream = sys.stdin.buffer
 
-    try:
-        stream = stream.decode(encoding)
-    except UnicodeDecodeError as e:
-        fatal('Unable to decode input: %s, start: %d, end: %d' % (e.reason, e.start, e.end))
+    for line_nr, line in enumerate(stream):
+        try:
+            line = line.decode(encoding)
+        except UnicodeDecodeError as e:
+            fatal('Unable to decode input line %s: %s, start: %d, end: %d' % (line_nr, e.reason, e.start, e.end))
 
-    sys.stdout.write(unidecode(stream))
+        sys.stdout.write(unidecode(line))
+    stream.close()
