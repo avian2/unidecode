@@ -17,6 +17,9 @@ setup(
     long_description=get_long_description(),
     author='Tomaz Solc',
     author_email='tomaz.solc@tablix.org',
+    project_urls={
+        'Source': 'https://github.com/avian2/unidecode',
+    },
 
     packages=['unidecode'],
     package_data={'unidecode': ['py.typed']},
