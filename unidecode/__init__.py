@@ -17,9 +17,11 @@ A standard string object will be returned. If you need bytes, use:
 b'Knosos'
 """
 import warnings
-from typing import Dict, Optional, Sequence
+from typing import Dict, Iterator, Optional, Sequence
+from pathlib import Path
 
-Cache: Dict[int, Optional[Sequence[Optional[str]]]] = {}
+Cache = {} # type: Dict[int, Optional[Sequence[Optional[str]]]]
+Translator: Optional[dict[str, int]] = None
 
 class UnidecodeError(ValueError):
     def __init__(self, message: str, index: Optional[int] = None) -> None:
@@ -136,3 +138,83 @@ def _unidecode(string: str, errors: str, replace_str:str) -> str:
         retval.append(repl)
 
     return ''.join(retval)
+
+def preload_translator() -> dict[str, int]:
+    global Translator
+
+    if Translator is None:
+        Translator = {
+            codepoint : char
+
+            for file in Path(__file__).parent.glob('x*.py')
+            for codepoint, char in enumerate(
+                __import__(f'unidecode.{file.stem}', globals(), locals(), ['data']).data,
+                int(f'0{file.stem}', base=16) << 8
+            )
+            if codepoint > 127 and isinstance(char, str)
+        }
+
+    return Translator
+
+def _unidecode_translate_replace_iterator (string: str, replace_str: str) -> Iterator[int]:
+    replace_bytes = replace_str.encode()
+
+    for char in string:
+        char_ord = ord(char)
+
+        if char_ord > 127:
+            yield from replace_bytes
+
+        else:
+            yield char_ord
+
+def unidecode_translate(
+    string: str, errors: str = 'ignore', replace_str: str = '?', check_surrogates: bool = False
+) -> str:
+    """Transliterate an Unicode object into an ASCII string
+    This method is usually faster than unidecode_expect_nonascii/unidecode, but it uses more memory
+    To reduce first call time, invoke preload_translator to preload translation table
+
+    >>> unidecode("\u5317\u4EB0")
+    "Bei Jing "
+
+    See unidecode_expect_nonascii.
+    """
+    if check_surrogates:
+        for char in string:
+            if 0xd800 <= ord(char) <= 0xdfff:
+                warnings.warn(
+                    f'Surrogate character {char} will be ignored. '
+                    'You might be using a narrow Python build.',
+                    RuntimeWarning, 2
+                )
+
+    retval = string.translate(preload_translator())
+
+    if errors == 'preserve':
+        return retval
+
+    retval_bytes: bytes
+
+    if errors in ('ignore', 'strict') or (errors == 'replace' and replace_str == '?'):
+        try:
+            retval_bytes = retval.encode('ascii', errors=errors)
+
+        except UnicodeEncodeError as exc:
+            raise UnidecodeError(
+                f'no replacement found for character {exc.object[exc.start : exc.end]} '
+                f'in position {exc.start}',
+                exc.start
+            ) from None
+
+    elif errors == 'replace':
+        if replace_str == '?':
+            retval_bytes = retval.encode('ascii', errors='replace')
+
+        else:
+            retval_bytes = bytes(_unidecode_translate_replace_iterator(retval, replace_str))
+
+    else:
+        raise UnidecodeError(f'invalid value for errors parameter {errors}')
+
+    return retval_bytes.decode()
