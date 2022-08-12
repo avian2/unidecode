@@ -21,7 +21,7 @@ from typing import Dict, Iterator, Optional, Sequence
 from pathlib import Path
 
 Cache = {} # type: Dict[int, Optional[Sequence[Optional[str]]]]
-Translator: Optional[dict[str, int]] = None
+Translator = None # type: Optional[Dict[int, str]]
 
 class UnidecodeError(ValueError):
     def __init__(self, message: str, index: Optional[int] = None) -> None:
@@ -139,7 +139,7 @@ def _unidecode(string: str, errors: str, replace_str:str) -> str:
 
     return ''.join(retval)
 
-def preload_translator() -> dict[str, int]:
+def preload_translator() -> Dict[int, str]:
     global Translator
 
     if Translator is None:
