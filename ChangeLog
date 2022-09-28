@@ -1,3 +1,6 @@
+2022-09-28	unidecode 1.3.5
+	* Remove trailing space in replacements for vulgar fractions.
+
 2022-03-10	unidecode 1.3.4
 	* Add some missing replacements for symbols in the U+21xx and
 	  U+1F1xx pages (thanks to @cheznewa on GitHub)
