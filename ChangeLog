@@ -1,5 +1,11 @@
+2022-09-30	unidecode 1.3.6
+	* No changes. Re-upload to PyPi.
+
 2022-09-28	unidecode 1.3.5
 	* Remove trailing space in replacements for vulgar fractions.
+	* This release was yanked from PyPi, because the Wheel package
+	  contained the wrong version of the code and was incompatible
+	  with Python 3.5. .tar.gz package was not affected.
 
 2022-03-10	unidecode 1.3.4
 	* Add some missing replacements for symbols in the U+21xx and
