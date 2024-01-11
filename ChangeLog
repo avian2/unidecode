@@ -1,3 +1,7 @@
+2024-01-11	unidecode 1.3.8
+	* Fix replacement for U+1E9E "LATIN CAPITAL LETTER SHARP S"
+	  (thanks to Thomas Voss)
+
 2023-09-25	unidecode 1.3.7
 	* Add missing replacements for katakana punctuation (thanks to
 	  Emil Hammarberg)
