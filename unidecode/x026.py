@@ -83,18 +83,18 @@ None,    # 0x18
 '',    # 0x51
 '',    # 0x52
 '',    # 0x53
-'',    # 0x54
-'',    # 0x55
-'',    # 0x56
-'',    # 0x57
-'',    # 0x58
-'',    # 0x59
-'',    # 0x5a
-'',    # 0x5b
-'',    # 0x5c
-'',    # 0x5d
-'',    # 0x5e
-'',    # 0x5f
+'white king',    # 0x54
+'white queen',    # 0x55
+'white rook',    # 0x56
+'white bishop',    # 0x57
+'white knight',    # 0x58
+'white pawn',    # 0x59
+'black king',    # 0x5a
+'black queen',    # 0x5b
+'black rook',    # 0x5c
+'black bishop',    # 0x5d
+'black knight',    # 0x5e
+'black pawn',    # 0x5f
 'spades',    # 0x60
 'hearts',    # 0x61
 'diamonds',    # 0x62
