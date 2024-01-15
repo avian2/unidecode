@@ -95,14 +95,14 @@ None,    # 0x18
 'black bishop',    # 0x5d
 'black knight',    # 0x5e
 'black pawn',    # 0x5f
-'spades',    # 0x60
-'hearts',    # 0x61
-'diamonds',    # 0x62
-'clubs',    # 0x63
-'spades',    # 0x64
-'hearts',    # 0x65
-'diamonds',    # 0x66
-'clubs',    # 0x67
+'black spades',    # 0x60
+'white hearts',    # 0x61
+'white diamonds',    # 0x62
+'black clubs',    # 0x63
+'white spades',    # 0x64
+'black hearts',    # 0x65
+'black diamonds',    # 0x66
+'white clubs',    # 0x67
 '',    # 0x68
 '',    # 0x69
 '',    # 0x6a
