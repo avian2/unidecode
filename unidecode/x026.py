@@ -95,6 +95,12 @@ None,    # 0x18
 'black bishop',    # 0x5d
 'black knight',    # 0x5e
 'black pawn',    # 0x5f
+
+# Unicode standard doesn't give an explanation why card suits exist in black
+# and white variants. Adding "white ..." and "black ..." here isn't useful
+# since both variants can be used for either red or black suit color.
+#
+# See discussion at https://github.com/avian2/unidecode/pull/93
 'spades',    # 0x60
 'hearts',    # 0x61
 'diamonds',    # 0x62
