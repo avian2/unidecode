@@ -31,7 +31,7 @@ class WarningLogger:
 
 class BaseTestUnidecode():
 
-    def test_ascii(self):
+    def test_ascii_to_self(self):
 
         wlog = WarningLogger()
         wlog.start("not an unicode object")
@@ -48,15 +48,19 @@ class BaseTestUnidecode():
 
         wlog.stop()
 
-    def test_bmp(self):
-        for n in range(0,0x10000):
+    def test_all_to_ascii(self):
+        for n in range(0,0x1ffff):
             # skip over surrogate pairs, which throw a warning
             if 0xd800 <= n <= 0xdfff:
                 continue
 
-            # Just check that it doesn't throw an exception
+            # Check that it doesn't throw an exception
             t = chr(n)
-            self.unidecode(t)
+
+            u = self.unidecode(t)
+
+            # Check that returned string encodes to ASCII
+            b = u.encode('ascii')
 
     def test_surrogates(self):
         wlog = WarningLogger()
