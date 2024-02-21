@@ -17,7 +17,13 @@ setup(
     long_description=get_long_description(),
     author='Tomaz Solc',
     author_email='tomaz.solc@tablix.org',
-
+    url="https://github.com/avian2/unidecode",
+    project_urls={
+        "Issues": "https://github.com/avian2/unidecode/issues",
+        "CI": "https://github.com/avian2/unidecode/actions",
+        "Changelog": "https://github.com/avian2/unidecode/blob/master/ChangeLog",
+        "Documentation": "https://github.com/avian2/unidecode/blob/master/README.rst",
+    },
     packages=['unidecode'],
     package_data={'unidecode': ['py.typed']},
     python_requires=">=3.5",
