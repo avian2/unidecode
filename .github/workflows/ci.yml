@@ -13,12 +13,16 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - name: 3.7
+          - name: "3.7"
             toxenv: py37
-          - name: 3.8
+          - name: "3.8"
             toxenv: py38
-          - name: 3.9
+          - name: "3.9"
             toxenv: py39
+          - name: "3.10"
+            toxenv: py310
+          - name: "3.11"
+            toxenv: py311
 
     steps:
     - uses: actions/checkout@v2
