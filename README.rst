@@ -105,7 +105,7 @@ a full list of available options.
 Requirements
 ------------
 
-Nothing except Python itself. Unidecode supports Python 3.5 or later.
+Nothing except Python itself. Unidecode supports Python 3.7 or later.
 
 You need a Python build with "wide" Unicode characters (also called "UCS-4
 build") in order for Unidecode to work correctly with characters outside of
