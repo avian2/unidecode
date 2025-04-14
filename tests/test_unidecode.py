@@ -523,6 +523,10 @@ class BaseTestUnidecode():
         # "During handling of the above exception, another exception occurred")
         self.assertIsNone(e.exception.__context__)
 
+    def test_degree(self):
+        self.assertEqual(self.unidecode('\u2109'), self.unidecode('\u00b0F'))
+        self.assertEqual(self.unidecode('\u2103'), self.unidecode('\u00b0C'))
+
 class TestUnidecode(BaseTestUnidecode, unittest.TestCase):
     unidecode = staticmethod(unidecode)
 
