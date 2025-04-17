@@ -2,7 +2,6 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -13,8 +12,6 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - name: "3.7"
-            toxenv: py37
           - name: "3.8"
             toxenv: py38
           - name: "3.9"
