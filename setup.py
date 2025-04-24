@@ -11,7 +11,7 @@ def get_long_description():
 
 setup(
     name='Unidecode',
-    version='1.3.8',
+    version='1.4.0',
     description='ASCII transliterations of Unicode text',
     license='GPL',
     long_description=get_long_description(),
