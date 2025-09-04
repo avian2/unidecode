@@ -5,7 +5,7 @@
 Example usage:
 
 >>> from unidecode import unidecode
->>> unidecode("\u5317\u4EB0")
+>>> unidecode("\u5317\u4EAC")
 "Bei Jing "
 
 The transliteration uses a straightforward map, and doesn't have alternatives
