@@ -20,6 +20,8 @@ jobs:
             toxenv: py310
           - name: "3.11"
             toxenv: py311
+          - name: "3.12"
+            toxenv: py312
 
     steps:
     - uses: actions/checkout@v2
