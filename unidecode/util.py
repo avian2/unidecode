@@ -18,7 +18,7 @@ def main():
             description="Transliterate Unicode text into ASCII. FILE is path to file to transliterate. "
             "Standard input is used if FILE is omitted and -c is not specified.")
     parser.add_argument('-e', '--encoding', metavar='ENCODING', default=default_encoding,
-            help='Specify an encoding (default is %s)' % (default_encoding,))
+            help='Specify input encoding (default from your locale is %s)' % (default_encoding,))
     parser.add_argument('-c', metavar='TEXT', dest='text',
             help='Transliterate TEXT instead of FILE')
     parser.add_argument('path', nargs='?', metavar='FILE')
