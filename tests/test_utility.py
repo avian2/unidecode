@@ -40,7 +40,8 @@ class TestUnidecodeUtility(unittest.TestCase):
         out, err, rc = run(['-e', 'utf8', f.name])
 
         # Text after : ... can differ between Python versions
-        self.assertRegex(err, '^Unable to decode input line ')
+        r = re.compile(r'^Unable to decode input line 0, bytes 0-1 \(8a\): ', re.M)
+        self.assertRegex(err, r)
         self.assertEqual(rc, 1)
 
     def test_file_specified_encoding(self):

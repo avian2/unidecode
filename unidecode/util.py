@@ -45,7 +45,8 @@ def main():
         try:
             line = line.decode(encoding)
         except UnicodeDecodeError as e:
-            fatal('Unable to decode input line %s: %s, start: %d, end: %d' % (line_nr, e.reason, e.start, e.end))
+            s = ' '.join('%02x' % e.object[n] for n in range(e.start, e.end))
+            fatal('Unable to decode input line %s, bytes %d-%d (%s): %s' % (line_nr, e.start, e.end, s, e.reason))
 
         sys.stdout.write(unidecode(line))
     stream.close()
