@@ -1,2 +1,3 @@
 [run]
     omit=unidecode/x*.py
+    patch=subprocess
