@@ -44,6 +44,13 @@ class TestUnidecodeUtility(unittest.TestCase):
         self.assertRegex(err, r)
         self.assertEqual(rc, 1)
 
+    def test_file_and_commandline(self):
+        out, err, rc = run(['-c', 'foo', 'bar'])
+
+        r = re.compile(r"^Can't use both FILE and -c option$", re.M)
+        self.assertRegex(err, r)
+        self.assertEqual(rc, 1)
+
     def test_file_specified_encoding(self):
         f = temp(self.TEST_UNICODE.encode('sjis'))
 
