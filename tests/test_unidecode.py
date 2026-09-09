@@ -527,6 +527,11 @@ class BaseTestUnidecode():
         self.assertEqual(self.unidecode('\u2109'), self.unidecode('\u00b0F'))
         self.assertEqual(self.unidecode('\u2103'), self.unidecode('\u00b0C'))
 
+    def test_schwa(self):
+        # https://github.com/avian2/unidecode/issues/91
+        self.assertEqual(self.unidecode('\u0259'), 'e')
+        self.assertEqual(self.unidecode('Balab\u0259yov'), 'Balabeyov')
+
 class TestUnidecode(BaseTestUnidecode, unittest.TestCase):
     unidecode = staticmethod(unidecode)
 
