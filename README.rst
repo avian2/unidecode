@@ -206,9 +206,6 @@ I've upgraded Unidecode and now some URLs on my website return 404 Not Found.
     it in the database or lock your dependency of Unidecode to one specific
     version.
 
-Some of the issues in this section are discussed in more detail in `this blog
-post <https://www.tablix.org/~avian/blog/archives/2013/09/python_unidecode_release_0_04_14/>`_.
-
 
 Performance notes
 -----------------
@@ -235,13 +232,9 @@ negligible.
 Source
 ------
 
-You can get the latest development version of Unidecode with::
+You can get the latest development version of Unidecode from GitHub with::
 
-    $ git clone https://www.tablix.org/~avian/git/unidecode.git
-
-There is also an official mirror of this repository on GitHub at
-https://github.com/avian2/unidecode
-
+    $ git clone https://github.com/avian2/unidecode.git
 
 Contact
 -------
